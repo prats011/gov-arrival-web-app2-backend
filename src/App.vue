@@ -20,20 +20,27 @@ import Navbar from './components/Navbar.vue';
           </h2>
           <ol class="specifications">
             <li>All passengers must complete the Thailand Digital Arrival Card.</li>
-            <li>If the alien stays in the Kingdom longer than 90 days, he/she must notify 
-            in writing the nearest Immigration Officer, concerning place of stay, as soon as possible upon expiration 
-            of 90 days. And required to do so every 90 days.</li>
+            <li>If the alien stays in the Kingdom longer than 90 days, he/she must notify
+              in writing the nearest Immigration Officer, concerning place of stay, as soon as possible upon expiration
+              of 90 days. And required to do so every 90 days.</li>
             <li>Aliens are not allowed to work unless they are granted Work Permit.</li>
-            <li>Foreigners are required to submit their arrival card information 3 days 
-            in advance of their arrival date in Thailand.</li>
+            <li>Foreigners are required to submit their arrival card information 3 days
+              in advance of their arrival date in Thailand.</li>
           </ol>
-      </div>
+        </div>
 
-      <div class="buttons">
-        <button class="button-menu">Arrival Card<p>Provide your Thailand Digital Arrival Card details for your coming trip.</p></button>
-        <button class="button-menu">Update Arrival Card</button>
+        <div class="buttons">
+          <button class="button-menu">
+            <span class="button-title">Arrival Card</span>
+            <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming trip.</span>
+          </button>
+          <button class="button-menu">
+            <span class="button-title">Update Arrival Card</span>
+            <span class="button-subtext">Make change to the Thailand Digital Arrival Card information.</span>
+          </button>
+        </div>
+
       </div>
-    </div>
     </main>
   </div>
 </template>
@@ -77,7 +84,7 @@ header {
   color: #0056b3;
   font-size: 16px;
   font-family: 'Arial', sans-serif;
-  line-height: 1.2; 
+  line-height: 1.2;
   margin-top: 10px;
   margin-left: 10vw;
   margin-right: 10vw;
@@ -96,16 +103,13 @@ header {
 }
 
 .button-menu {
-  background-color:#1172A7;
+  background-color: #1172A7;
   color: #FFF;
   border: none;
   border-radius: 0.5cm;
-  padding: 2vw 20vh;
+  padding: 2vh 10vh;
   position: relative;
   text-align: center;
-  
+
 }
-
-
-
 </style>
