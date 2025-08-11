@@ -40,6 +40,10 @@ import Navbar from './components/Navbar.vue';
           </button>
         </div>
 
+        <a href="#" class="bottom-text" >User's Guide</a>
+        <p class="bottom-text">Copyright 2024 Project. All rights reserved.<br>Version 2025.07.00-0398</p>
+        
+
       </div>
     </main>
   </div>
@@ -95,21 +99,49 @@ header {
 }
 
 .buttons {
-  margin-top: -20vh;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 200px;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
 
 .button-menu {
   background-color: #1172A7;
-  color: #FFF;
   border: none;
   border-radius: 0.5cm;
-  padding: 2vh 10vh;
-  position: relative;
+  padding: 25px 40px;
   text-align: center;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  width: 500px;
+  height: 100px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px black;
+  color: #FFF;
+  transition: transform 0.2s;
 }
+
+.button-title {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.button-subtext {
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.3;
+}
+
+.bottom-text {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  
+}
+
 </style>
