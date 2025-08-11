@@ -2,6 +2,7 @@
 import Navbar from './components/Navbar.vue';
 
 
+
 </script>
 
 <template>
@@ -30,10 +31,12 @@ import Navbar from './components/Navbar.vue';
         </div>
 
         <div class="buttons">
-          <button class="button-menu">
-            <span class="button-title">Arrival Card</span>
-            <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming trip.</span>
-          </button>
+          <router-link to="./arrival-card" custom v-slot="{ navigate }">
+            <button @click="navigate" role="link" class="button-menu">            
+              <span class="button-title">Arrival Card</span>
+              <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming trip.</span>
+            </button>
+          </router-link>
           <button class="button-menu">
             <span class="button-title">Update Arrival Card</span>
             <span class="button-subtext">Make change to the Thailand Digital Arrival Card information.</span>
