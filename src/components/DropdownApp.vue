@@ -20,13 +20,20 @@
 <script setup>
 import { ref } from 'vue'
 
-const selectedLanguage = ref('English')
-const items = ["English", "French", "Thai"]
+const props = defineProps({
+  items: {
+    type: Array,
+    required: true
+  }
+})
+
+const selectedLanguage = ref(props.items[0] || '')
 
 function changeLanguage() {
   console.log('Language changed to:', selectedLanguage.value)
 }
 </script>
+
 
 
 <style lang="css">

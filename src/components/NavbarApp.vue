@@ -1,8 +1,7 @@
 <script setup>
-import Dropdown from './Dropdown.vue';
 import { ref } from 'vue'
 
-const languages = ref(['en', 'fr', 'es'])
+const languages = ref(['English', 'French', 'Spanish'])
 </script>
 
 <template>

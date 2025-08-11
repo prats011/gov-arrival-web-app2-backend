@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Arrival Card Page</h1>
-    <p></p>
+    <p>Hello World</p>
   </div>
 </template>
 

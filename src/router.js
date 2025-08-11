@@ -1,6 +1,7 @@
+// src/router.js or src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeApp from './HomeApp.vue'
-import ArrivalCard from './ArrivalCard.vue'
+import HomeApp from '@/HomeApp.vue'
+import ArrivalCard from '@/views/ArrivalCardApp.vue'
 
 const routes = [
   { path: '/', component: HomeApp },

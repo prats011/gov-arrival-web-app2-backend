@@ -1,5 +1,6 @@
 <script setup>
-import Navbar from './components/Navbar.vue';
+import Navbar from './components/NavbarApp.vue';
+
 
 
 
@@ -31,10 +32,11 @@ import Navbar from './components/Navbar.vue';
         </div>
 
         <div class="buttons">
-          <router-link to="./arrival-card" custom v-slot="{ navigate }">
-            <button @click="navigate" role="link" class="button-menu">            
+          <router-link to="/arrival-card" custom v-slot="{ navigate }">
+            <button @click="navigate" role="link" class="button-menu">
               <span class="button-title">Arrival Card</span>
-              <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming trip.</span>
+              <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming
+                trip.</span>
             </button>
           </router-link>
           <button class="button-menu">
@@ -43,9 +45,9 @@ import Navbar from './components/Navbar.vue';
           </button>
         </div>
 
-        <a href="#" class="bottom-text" >User's Guide</a>
+        <a href="#" class="bottom-text">User's Guide</a>
         <p class="bottom-text">Copyright 2024 Project. All rights reserved.<br>Version 2025.07.00-0398</p>
-        
+
 
       </div>
     </main>
@@ -144,7 +146,6 @@ header {
   display: flex;
   justify-content: center;
   text-align: center;
-  
-}
 
+}
 </style>
