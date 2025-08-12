@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>Arrival Card Page</h1>
-    <p>Hello World</p>
+  <div class="progress-bar">
+    <div></div>
   </div>
 </template>
 
