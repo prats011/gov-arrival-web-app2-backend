@@ -15,23 +15,17 @@ const count = ref(0)
       <div class="progress-bar">
         <div class="progress">
           <div class="progress-circles" :class="{ 'highlited': count >= 0 }">1</div>
-          <div class="progress-text" :class="{ 'highlited': count >= 0 }">Personal Information</div>
+          <div class="progress-text">Personal Information</div>
         </div>
-        <div class="line" :class="{ 'highlited': count >= 1 }">
-          <hr>
-          </hr>
-        </div>
+        <hr class="line" :class="{ 'highlited': count >= 1 }"></hr>
         <div class="progress">
           <div class="progress-circles" :class="{ 'highlited': count >= 1 }">2</div>
-          <div class="progress-text" :class="{ 'highlited': count >= 1 }">Trip & Accommodation Information</div>
+          <div class="progress-text">Trip & Accommodation<br> Information</div>
         </div>
-        <div class="line" :class="{ 'highlited': count >= 2 }">
-          <hr>
-          </hr>
-        </div>
+        <hr class="line" :class="{ 'highlited': count >= 2 }"></hr>
         <div class="progress">
           <div class="progress-circles" :class="{ 'highlited': count >= 2 }">3</div>
-          <div class="progress-text" :class="{ 'highlited': count >= 2 }">Health Declaration</div>
+          <div class="progress-text">Health Declaration</div>
         </div>
       </div>
 
@@ -65,7 +59,6 @@ const count = ref(0)
 
 .progress-container {
   width: 100%;
-  padding: 20px 0px;
   margin-bottom: 30px;
 }
 
@@ -74,7 +67,7 @@ const count = ref(0)
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 800px;
+  max-width: inherit;
   margin: 0 auto;
 
 }
@@ -84,6 +77,7 @@ const count = ref(0)
   flex-direction: column;
   align-items: center;
   position: relative;
+  padding: 30px 0;
 }
 
 .progress-circles {
@@ -98,17 +92,27 @@ const count = ref(0)
 }
 
 .progress-text {
+  display: inline-flex;
   text-align: center;
-  max-width: 120px;
   line-height: 1.3;
-  font-weight: 500;
+  font-weight: 200;
+  font-size: 12px;
+
 }
 
 .line {
-  width: 100px;
-  height: 2px;
-  background-color: #e0e0e0;
-  margin: 0 20px;
-  margin-bottom: 32px;
+  padding: 2px 150px;
+  background-color: #e5e7eb;
+  border: none;
+  margin: 0;
+  margin-bottom: 32px; 
+  /* How to allow overflow of the line in the progress container*/ 
 }
+
+.highlited {
+  background-color: rgb(27, 108, 163);
+  color: #FFF;
+  transition: background-color 1s ease-in-out;
+}
+
 </style>
