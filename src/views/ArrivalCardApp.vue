@@ -12,7 +12,11 @@ import ProgressBar from '@/components/ProgressBar.vue';
   <div class="container">
     <ProgressBar />
     <div class="detail-container">
-      <h1 class="title">Personal information in Passport</h1>
+      <h1 class="title">Personal Information In Passport</h1>
+      <hr class="line">
+      <div class="details">
+        
+      </div>
     </div>
 
 
@@ -33,7 +37,7 @@ import ProgressBar from '@/components/ProgressBar.vue';
 }
 
 .detail-container {
-  display: flex;
+  display: column;
   justify-content: start;
   height: 60vh;
   width: 95vw;
@@ -45,9 +49,17 @@ import ProgressBar from '@/components/ProgressBar.vue';
 
 .title {
   font-size: 15px;
+  padding: 10px 0px 0 10px;
   color: rgb(27, 108, 163);
+  font-weight: 300;
 }
 
+.line {
+  margin: 15px 0 10px 0;
+  background-color: rgb(27, 108, 163);
+  border: none;
+  padding: 0.1px;
+}
 
 
 </style>
