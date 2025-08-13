@@ -15,11 +15,8 @@ import ProgressBar from '@/components/ProgressBar.vue';
       <h1 class="title">Personal Information In Passport</h1>
       <hr class="line">
       <div class="details">
-        
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -60,6 +57,4 @@ import ProgressBar from '@/components/ProgressBar.vue';
   border: none;
   padding: 0.1px;
 }
-
-
 </style>
