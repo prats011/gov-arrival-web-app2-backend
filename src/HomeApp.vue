@@ -1,6 +1,7 @@
 <script setup>
 import Navbar from './components/NavbarApp.vue';
-
+import { ref } from 'vue'
+const languages = ref(['English', 'French', 'Spanish'])
 
 
 
@@ -10,6 +11,9 @@ import Navbar from './components/NavbarApp.vue';
   <div id="App">
     <header>
       <Navbar />
+      <nav>
+        <Dropdown title="Language" :items="languages" />
+      </nav>
     </header>
     <main>
       <div class="container">
@@ -60,12 +64,6 @@ import Navbar from './components/NavbarApp.vue';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-header {
-  background-color: #1172a7;
-  width: 100vw;
-  padding: 15px;
 }
 
 .container {

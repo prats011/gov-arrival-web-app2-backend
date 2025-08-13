@@ -1,16 +1,18 @@
 <script setup>
-import { ref } from 'vue'
 
-const languages = ref(['English', 'French', 'Spanish'])
 </script>
 
 <template>
-  <nav>
-    <Dropdown title="Language" :items="languages" />
-  </nav>
+
 </template>
 
 <style lang="css">
-
-
+header {
+  background-color: #1172a7;
+  width: 100vw;
+  padding: 10px;
+  height: 5vh;
+  font-size: 13px;
+  color: #FFF;
+}
 </style>
