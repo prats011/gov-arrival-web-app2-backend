@@ -1,5 +1,4 @@
 <script setup>
-import Navbar from './components/NavbarApp.vue';
 import { ref } from 'vue'
 const languages = ref(['English', 'French', 'Spanish'])
 
