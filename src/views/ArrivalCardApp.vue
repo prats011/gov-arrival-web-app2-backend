@@ -1,5 +1,7 @@
 <script setup>
 import ProgressBar from '@/components/ProgressBar.vue';
+import infoIcon from '@/assets/images/infoIcon.png';
+
 import { ref } from 'vue';
 
 const family_name = ref('')
@@ -29,7 +31,10 @@ const phone_no = ref('')
   <div class="container">
     <ProgressBar />
     <div class="detail-container">
-      <h1 class="title">Personal Information In Passport</h1>
+      <div class="info-image">
+        <img :src="infoIcon">
+        <h1 class="title">Personal Information In Passport</h1>
+      </div>
       <hr class="line">
       <div class="details">
         <div class="detail-forms">
@@ -95,7 +100,7 @@ const phone_no = ref('')
           <input type="text" class="form-control" required v-model="phone_no" />
         </div>
       </div>
-      <button class="btn-continue">Continue</button>
+      <button class="btn-continue" @clicked="">Continue</button>
     </div>
   </div>
 </template>
@@ -127,9 +132,19 @@ const phone_no = ref('')
 
 .title {
   font-size: 15px;
-  padding: 10px 0px 0 10px;
   color: rgb(27, 108, 163);
   font-weight: 300;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.info-image {
+  display: flex;
+  align-items: center;
+}
+
+.info-image img {
+  width: 40px;
 }
 
 .line {
@@ -195,5 +210,4 @@ const phone_no = ref('')
   margin-left: auto;
   display: block;
 }
-
 </style>
