@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
-
+import personalIcon from '@/assets/images/personalIcon.png';
 import { ref } from 'vue';
 
 const family_name = ref('')
@@ -16,11 +16,14 @@ const visa_no = ref('')
 const country_residence = ref('')
 const city_residence = ref('')
 const phone_no = ref('')
+const count = inject('globalCount')
 
+const continueClicked = () => {
+    count++
+}
 
 //Websites used 
 //https://www.w3schools.com/html/html_forms.asp
-
 </script>
 
 <template>
@@ -31,7 +34,7 @@ const phone_no = ref('')
   <div class="container">
     <ProgressBar />
     <div class="detail-container">
-      <div class="info-image">
+      <div class="image">
         <img :src="infoIcon">
         <h1 class="title">Personal Information In Passport</h1>
       </div>
@@ -61,7 +64,10 @@ const phone_no = ref('')
           <input type="text" class="form-control" required v-model="nationality" />
         </div>
       </div>
-      <h1 class="title">Personal Information</h1>
+      <div class="image">
+        <img :src="personalIcon">
+        <h1 class="title">Personal Information</h1>
+      </div>
       <hr class="line">
       <div class="details">
         <div class="detail-forms">
@@ -100,7 +106,7 @@ const phone_no = ref('')
           <input type="text" class="form-control" required v-model="phone_no" />
         </div>
       </div>
-      <button class="btn-continue" @clicked="">Continue</button>
+      <button class="btn-continue" @clicked="continueClicked">Continue</button>
     </div>
   </div>
 </template>
@@ -138,12 +144,12 @@ const phone_no = ref('')
   padding: 0;
 }
 
-.info-image {
+.image {
   display: flex;
   align-items: center;
 }
 
-.info-image img {
+.image img {
   width: 40px;
 }
 
