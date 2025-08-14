@@ -95,7 +95,7 @@ const phone_no = ref('')
           <input type="text" class="form-control" required v-model="phone_no" />
         </div>
       </div>
-      
+      <button class="btn-continue">Continue</button>
     </div>
   </div>
 </template>
@@ -114,7 +114,8 @@ const phone_no = ref('')
 }
 
 .detail-container {
-  display: column;
+  display: flex;
+  flex-direction: column;
   justify-content: start;
   height: 70vh;
   width: 95vw;
@@ -181,6 +182,18 @@ const phone_no = ref('')
   width: 100%;
   font-size: 12px;
   display: inline-flex;
+}
+
+.btn-continue {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: rgb(27, 108, 163);
+  border: none;
+  margin-top: -1mm;
+  font-size: 12px;
+  margin-left: auto;
+  display: block;
 }
 
 </style>
