@@ -2,7 +2,18 @@
 import ProgressBar from '@/components/ProgressBar.vue';
 import { ref } from 'vue';
 
-const message = ref('')
+const family_name = ref('')
+const first_name = ref('')
+const middle_name = ref('')
+const passport_no = ref('')
+const nationality = ref('')
+const date_of_birth = ref('')
+const occupation = ref('')
+const gender = ref('')
+const visa_no = ref('')
+const country_residence = ref('')
+const city_residence = ref('')
+const phone_no = ref('')
 
 </script>
 
@@ -19,7 +30,11 @@ const message = ref('')
       <div class="details">
         <div class="detail-forms">
           <label for="validationDefault">Family Name</label>
-          <input type="text" class="form-control" required v-model="family_name" />
+          <input 
+          type="text" class="form-control" 
+          required v-model="family_name" 
+          placeholder="Only letters A-Z are allowed. Enter '-' if none" 
+          />
         </div>
         <div class="detail-forms">
           <label for="validationDefault">First Name</label>
@@ -37,8 +52,42 @@ const message = ref('')
           <label for="validationDefault">Nationality/Citizenship</label>
           <input type="text" class="form-control" required v-model="nationality" />
         </div>
-
       </div>
+      <h1 class="title">Personal Information</h1>
+      <hr class="line">
+      <div class="details">
+        <div class="detail-forms">
+          <label for="validationDefault">Date of Birth</label>
+          <input type="text" class="form-control" required v-model="date_of_birth" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Occupation</label>
+          <input type="text" class="form-control" required v-model="occupation" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Gender</label>
+          <input type="text" class="form-control" required v-model="gender" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Visa No.</label>
+          <input type="text" class="form-control" required v-model="visa_no" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Country/Territory of Residence</label>
+          <input type="text" class="form-control" required v-model="country_residence" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">City/State of Residence</label>
+          <input type="text" class="form-control" required v-model="city_residence" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Phone No.</label>
+          <input type="text" class="form-control" required v-model="phone_no"/>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 </template>
@@ -59,7 +108,7 @@ const message = ref('')
 .detail-container {
   display: column;
   justify-content: start;
-  height: 60vh;
+  height: 70vh;
   width: 95vw;
   margin-top: -100px;
   padding: 10px;
@@ -103,7 +152,7 @@ const message = ref('')
   color: rgb(27, 108, 163);
   font-weight: 500;
   position: relative;
-  white-space: nowrap;
+  white-space: wrap;
   min-width: 120px;
 }
 
