@@ -15,6 +15,10 @@ const country_residence = ref('')
 const city_residence = ref('')
 const phone_no = ref('')
 
+
+//Websites used 
+//https://www.w3schools.com/html/html_forms.asp
+
 </script>
 
 <template>
@@ -30,19 +34,18 @@ const phone_no = ref('')
       <div class="details">
         <div class="detail-forms">
           <label for="validationDefault">Family Name</label>
-          <input 
-          type="text" class="form-control" 
-          required v-model="family_name" 
-          placeholder="Only letters A-Z are allowed. Enter '-' if none" 
-          />
+          <input type="text" class="form-control" required v-model="family_name"
+            placeholder="Only letters A-Z are allowed. Enter '-' if none" />
         </div>
         <div class="detail-forms">
           <label for="validationDefault">First Name</label>
-          <input type="text" class="form-control" required v-model="first_name" />
+          <input type="text" class="form-control" required v-model="first_name"
+            placeholder="Only letters A-Z are allowed." />
         </div>
         <div class="detail-forms">
           <label for="validationDefault">Middle Name</label>
-          <input type="text" class="form-control" required v-model="middle_name" />
+          <input type="text" class="form-control" required v-model="middle_name"
+            placeholder="Only letters A-Z are allowed." />
         </div>
         <div class="detail-forms">
           <label for="validationDefault">Passport No.</label>
@@ -66,7 +69,14 @@ const phone_no = ref('')
         </div>
         <div class="detail-forms">
           <label for="validationDefault">Gender</label>
-          <input type="text" class="form-control" required v-model="gender" />
+          <form class="radio-form">
+            <input type="radio" id="male" name="gender" value="HTML">
+            <label for="male">MALE</label><br>
+            <input type="radio" id="female" name="gender" value="CSS">
+            <label for="female">FEMALE</label><br>
+            <input type="radio" id="undefined" name="gender" value="JavaScript">
+            <label for="undefined">UNDEFINED</label>
+          </form>
         </div>
         <div class="detail-forms">
           <label for="validationDefault">Visa No.</label>
@@ -82,12 +92,10 @@ const phone_no = ref('')
         </div>
         <div class="detail-forms">
           <label for="validationDefault">Phone No.</label>
-          <input type="text" class="form-control" required v-model="phone_no"/>
+          <input type="text" class="form-control" required v-model="phone_no" />
         </div>
       </div>
-
-
-
+      
     </div>
   </div>
 </template>
@@ -166,6 +174,13 @@ const phone_no = ref('')
   background-color: #ffffff;
   width: 100%;
   box-sizing: border-box;
+}
+
+.radio-form {
+  padding: 8px 20px;
+  width: 100%;
+  font-size: 12px;
+  display: inline-flex;
 }
 
 </style>
