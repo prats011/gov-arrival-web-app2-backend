@@ -82,6 +82,6 @@ const count = ref(0)
 .highlited {
     background-color: rgb(27, 108, 163);
     color: #FFF;
-    transition: background-color 1s ease-in-out;
+    transition: background-color 1s ease-in-out; /*transition: background-color 1s ease-in-out; */
 }
 </style>

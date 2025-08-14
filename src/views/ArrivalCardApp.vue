@@ -1,6 +1,8 @@
 <script setup>
-//import { ref } from 'vue'
 import ProgressBar from '@/components/ProgressBar.vue';
+import { ref } from 'vue';
+
+const message = ref('')
 
 </script>
 
@@ -15,6 +17,27 @@ import ProgressBar from '@/components/ProgressBar.vue';
       <h1 class="title">Personal Information In Passport</h1>
       <hr class="line">
       <div class="details">
+        <div class="detail-forms">
+          <label for="validationDefault">Family Name</label>
+          <input type="text" class="form-control" required v-model="family_name" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">First Name</label>
+          <input type="text" class="form-control" required v-model="first_name" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Middle Name</label>
+          <input type="text" class="form-control" required v-model="middle_name" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Passport No.</label>
+          <input type="text" class="form-control" required v-model="passport_no" />
+        </div>
+        <div class="detail-forms">
+          <label for="validationDefault">Nationality/Citizenship</label>
+          <input type="text" class="form-control" required v-model="nationality" />
+        </div>
+
       </div>
     </div>
   </div>
@@ -57,4 +80,43 @@ import ProgressBar from '@/components/ProgressBar.vue';
   border: none;
   padding: 0.1px;
 }
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 20px 40px;
+  padding: 20px;
+  align-items: start;
+}
+
+.detail-forms {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+
+.detail-forms label {
+  font-size: 12px;
+  color: rgb(27, 108, 163);
+  font-weight: 500;
+  position: relative;
+  white-space: nowrap;
+  min-width: 120px;
+}
+
+
+.form-control {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #374151;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 </style>
