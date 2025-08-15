@@ -2,41 +2,35 @@
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
 import personalIcon from '@/assets/images/personalIcon.png';
-import data_nationality from '@/assets/dataNationality.json'
 import data_country from '@/assets/dataCountry.json';
 import { inject } from 'vue';
 import { onMounted, ref } from 'vue';
 
-const option_nationality = ref([]);
-const selected_nationality = ref('');
-
 const option_country = ref([]);
 const selected_country = ref('');
+const selected_nationality = ref('');
+const selected_city = ref('');
 
-
-const family_name = ref('')
-const first_name = ref('')
-const middle_name = ref('')
-const passport_no = ref('')
-const date_of_birth = ref('')
-const occupation = ref('')
-const gender = ref('')
-const visa_no = ref('')
-const city_residence = ref('')
-const phone_no = ref('')
+const family_name = ref('');
+const first_name = ref('');
+const middle_name = ref('');
+const passport_no = ref('');
+const date_of_birth = ref('');
+const occupation = ref('');
+const gender = ref('');
+const visa_no = ref('');
+const city_residence = ref('');
+const phone_no = ref('');
 const count = inject('globalCount');
-console.log("The value of count: ", count.value)
+console.log("The value of count: ", count.value);
 
-onMounted(() => {
-  option_nationality.value = data_nationality;
-});
 onMounted(() => {
   option_country.value = data_country;
 });
 
 const continueClicked = () => {
   count.value++;
-  console.log("The value of count: ", count.value)
+  console.log("The value of count: ", count.value);
 }
 
 //Websites used 
@@ -80,7 +74,7 @@ const continueClicked = () => {
           <label for="validationDefault"><span class="asterick">*</span>Nationality/Citizenship</label>
           <select v-model="selected_nationality" class="form-control" id="nationality-Dropdown">
             <option disabled value="">Select your nationality</option>
-            <option v-for="option in option_nationality" :key="option.symbol" :value="option.name">
+            <option v-for="option in option_country" :key="option.symbol" :value="option.name">
               {{ option.symbol }}: {{ option.name }}
             </option>
           </select>
@@ -119,18 +113,25 @@ const continueClicked = () => {
           <label for="validationDefault"><span class="asterick">*</span>Country/Territory of Residence</label>
           <select v-model="selected_country" class="form-control" id="country-Dropdown">
             <option disabled value="">Select your country</option>
-            <option v-for="option in option_country" :key="option.symbol" :value="option.name">
-              {{ option.symbol }}: {{ option.name }}
+            <option v-for="option in option_country" :key="option.symbol" :value="option.country">
+              {{ option.symbol }}: {{ option.country }}
             </option>
           </select>
         </div>
         <div class="detail-forms">
           <label for="validationDefault"><span class="asterick">*</span>City/State of Residence</label>
-          <input type="text" class="form-control" required v-model="city_residence" />
+          <select v-model="selected_city" class="form-control" id="country-Dropdown">
+            <option disabled value="">Select your city</option>
+            <option v-for="option in option_country.find(c => c.country === selected_country)?.cities" :key="option" :value="option"> <!--https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG-->
+              {{ option }}
+            </option>
+          </select>
         </div>
         <div class="detail-forms">
           <label for="validationDefault"><span class="asterick">*</span>Phone No.</label>
-          <input type="text" class="form-control" required v-model="phone_no" />
+          <input type="tel" id="phone" name="phone" class="form-control" 
+            required v-model="phone_no" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+            placeholder="Format: xxx-xxx-xxxx"/>
         </div>
       </div>
       <router-link to="/arrival-card/trip-&-accomadation-information" custom v-slot="{ navigate }">
