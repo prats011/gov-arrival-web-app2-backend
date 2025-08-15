@@ -5,6 +5,8 @@ import personalIcon from '@/assets/images/personalIcon.png';
 import data_country from '@/assets/dataCountry.json';
 import { inject } from 'vue';
 import { onMounted, ref } from 'vue';
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const option_country = ref([]);
 const selected_country = ref('');
@@ -19,7 +21,6 @@ const date_of_birth = ref('');
 const occupation = ref('');
 const gender = ref('');
 const visa_no = ref('');
-const city_residence = ref('');
 const phone_no = ref('');
 const count = inject('globalCount');
 console.log("The value of count: ", count.value);
@@ -27,6 +28,16 @@ console.log("The value of count: ", count.value);
 onMounted(() => {
   option_country.value = data_country;
 });
+
+const onSubmit = (event) => {
+  const form = event.target;
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  continueClicked();
+  router.push("/arrival-card/trip-&-accomadation-information");
+};
 
 const continueClicked = () => {
   count.value++;
@@ -43,103 +54,100 @@ const continueClicked = () => {
     Arrival Card > Add Arrival Card
   </header>
   <div class="container">
-    <ProgressBar />
-    <div class="detail-container">
-      <div class="image">
-        <img :src="infoIcon">
-        <h1 class="title">Personal Information In Passport</h1>
+    <ProgressBar /> 
+    <form @submit.prevent="onSubmit"><!--https://youtu.be/XQJegKW0ukU?si=PMuY2D_1G3o-SRCE-->
+      <div class="detail-container">
+        <div class="image">
+          <img :src="infoIcon">
+          <h1 class="title">Personal Information In Passport</h1>
+        </div>
+        <hr class="line">
+        <div class="details">
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Family Name</label>
+            <input type="text" class="form-control" required v-model="family_name"
+              placeholder="Only letters A-Z are allowed. Enter '-' if none" />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>First Name</label>
+            <input type="text" class="form-control" required v-model="first_name"
+              placeholder="Only letters A-Z are allowed." />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault">Middle Name</label>
+            <input type="text" class="form-control" v-model="middle_name" placeholder="Only letters A-Z are allowed." />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Passport No.</label>
+            <input type="text" class="form-control" required v-model="passport_no" />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Nationality/Citizenship</label>
+            <select v-model="selected_nationality" class="form-control" id="nationality-Dropdown">
+              <option disabled value="">Select your nationality</option>
+              <option v-for="option in option_country" :key="option.symbol" :value="option.name">
+                {{ option.symbol }}: {{ option.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="image">
+          <img :src="personalIcon">
+          <h1 class="title">Personal Information</h1>
+        </div>
+        <hr class="line">
+        <div class="details">
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Date of Birth</label>
+            <input type="date" class="form-control" required v-model="date_of_birth" />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Occupation</label>
+            <input type="text" class="form-control" required v-model="occupation" />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Gender</label>
+            <form class="radio-form">
+              <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
+              <label for="male">MALE</label><br>
+              <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
+              <label for="female">FEMALE</label><br>
+              <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
+              <label for="undefined">UNDEFINED</label>
+            </form>
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault">Visa No.</label>
+            <input type="text" class="form-control" v-model="visa_no" />
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Country/Territory of Residence</label>
+            <select v-model="selected_country" class="form-control" id="country-Dropdown">
+              <option disabled value="">Select your country</option>
+              <option v-for="option in option_country" :key="option.symbol" :value="option.country">
+                {{ option.symbol }}: {{ option.country }}
+              </option>
+            </select>
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>City/State of Residence</label>
+            <select v-model="selected_city" class="form-control" id="country-Dropdown">
+              <option disabled value="">Select your city</option>
+              <option v-for="option in option_country.find(c => c.country === selected_country)?.cities" :key="option"
+                :value="option"> <!--https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG-->
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div class="detail-forms">
+            <label for="validationDefault"><span class="asterick">*</span>Phone No.</label>
+            <input type="tel" id="phone" name="phone" class="form-control" required v-model="phone_no"
+              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Format: xxx-xxx-xxxx" />
+          </div>
+        </div>
+        <button type="submit" class="btn-continue">Continue</button>
       </div>
-      <hr class="line">
-      <div class="details">
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Family Name</label>
-          <input type="text" class="form-control" required v-model="family_name"
-            placeholder="Only letters A-Z are allowed. Enter '-' if none" />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>First Name</label>
-          <input type="text" class="form-control" required v-model="first_name"
-            placeholder="Only letters A-Z are allowed." />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault">Middle Name</label>
-          <input type="text" class="form-control" required v-model="middle_name"
-            placeholder="Only letters A-Z are allowed." />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Passport No.</label>
-          <input type="text" class="form-control" required v-model="passport_no" />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Nationality/Citizenship</label>
-          <select v-model="selected_nationality" class="form-control" id="nationality-Dropdown">
-            <option disabled value="">Select your nationality</option>
-            <option v-for="option in option_country" :key="option.symbol" :value="option.name">
-              {{ option.symbol }}: {{ option.name }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="image">
-        <img :src="personalIcon">
-        <h1 class="title">Personal Information</h1>
-      </div>
-      <hr class="line">
-      <div class="details">
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Date of Birth</label>
-          <input type="text" class="form-control" required v-model="date_of_birth" />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Occupation</label>
-          <input type="text" class="form-control" required v-model="occupation" />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Gender</label>
-          <form class="radio-form">
-            <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
-            <label for="male">MALE</label><br>
-            <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
-            <label for="female">FEMALE</label><br>
-            <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
-            <label for="undefined">UNDEFINED</label>
-          </form>
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault">Visa No.</label>
-          <input type="text" class="form-control" required v-model="visa_no" />
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Country/Territory of Residence</label>
-          <select v-model="selected_country" class="form-control" id="country-Dropdown">
-            <option disabled value="">Select your country</option>
-            <option v-for="option in option_country" :key="option.symbol" :value="option.country">
-              {{ option.symbol }}: {{ option.country }}
-            </option>
-          </select>
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>City/State of Residence</label>
-          <select v-model="selected_city" class="form-control" id="country-Dropdown">
-            <option disabled value="">Select your city</option>
-            <option v-for="option in option_country.find(c => c.country === selected_country)?.cities" :key="option" :value="option"> <!--https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG-->
-              {{ option }}
-            </option>
-          </select>
-        </div>
-        <div class="detail-forms">
-          <label for="validationDefault"><span class="asterick">*</span>Phone No.</label>
-          <input type="tel" id="phone" name="phone" class="form-control" 
-            required v-model="phone_no" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
-            placeholder="Format: xxx-xxx-xxxx"/>
-        </div>
-      </div>
-      <router-link to="/arrival-card/trip-&-accomadation-information" custom v-slot="{ navigate }">
-        <button @click="() => { continueClicked(); navigate(); }" role="link" class="btn-continue">
-          Continue
-        </button>
-      </router-link>
-    </div>
+    </form>
   </div>
 </template>
 
