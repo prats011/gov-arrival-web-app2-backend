@@ -35,7 +35,7 @@ const languages = ref(['English', 'French', 'Spanish'])
         </div>
 
         <div class="buttons">
-          <router-link to="/arrival-card" custom v-slot="{ navigate }">
+          <router-link to="/arrival-card/personal-information" custom v-slot="{ navigate }">
             <button @click="navigate" role="link" class="button-menu">
               <span class="button-title">Arrival Card</span>
               <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming

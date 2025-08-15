@@ -2,24 +2,41 @@
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
 import personalIcon from '@/assets/images/personalIcon.png';
-import { ref } from 'vue';
+import data_nationality from '@/assets/dataNationality.json'
+import data_country from '@/assets/dataCountry.json';
+import { inject } from 'vue';
+import { onMounted, ref } from 'vue';
+
+const option_nationality = ref([]);
+const selected_nationality = ref('');
+
+const option_country = ref([]);
+const selected_country = ref('');
+
 
 const family_name = ref('')
 const first_name = ref('')
 const middle_name = ref('')
 const passport_no = ref('')
-const nationality = ref('')
 const date_of_birth = ref('')
 const occupation = ref('')
 const gender = ref('')
 const visa_no = ref('')
-const country_residence = ref('')
 const city_residence = ref('')
 const phone_no = ref('')
-const count = inject('globalCount')
+const count = inject('globalCount');
+console.log("The value of count: ", count.value)
+
+onMounted(() => {
+  option_nationality.value = data_nationality;
+});
+onMounted(() => {
+  option_country.value = data_country;
+});
 
 const continueClicked = () => {
-    count++
+  count.value++;
+  console.log("The value of count: ", count.value)
 }
 
 //Websites used 
@@ -41,12 +58,12 @@ const continueClicked = () => {
       <hr class="line">
       <div class="details">
         <div class="detail-forms">
-          <label for="validationDefault">Family Name</label>
+          <label for="validationDefault"><span class="asterick">*</span>Family Name</label>
           <input type="text" class="form-control" required v-model="family_name"
             placeholder="Only letters A-Z are allowed. Enter '-' if none" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">First Name</label>
+          <label for="validationDefault"><span class="asterick">*</span>First Name</label>
           <input type="text" class="form-control" required v-model="first_name"
             placeholder="Only letters A-Z are allowed." />
         </div>
@@ -56,12 +73,17 @@ const continueClicked = () => {
             placeholder="Only letters A-Z are allowed." />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Passport No.</label>
+          <label for="validationDefault"><span class="asterick">*</span>Passport No.</label>
           <input type="text" class="form-control" required v-model="passport_no" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Nationality/Citizenship</label>
-          <input type="text" class="form-control" required v-model="nationality" />
+          <label for="validationDefault"><span class="asterick">*</span>Nationality/Citizenship</label>
+          <select v-model="selected_nationality" class="form-control" id="nationality-Dropdown">
+            <option disabled value="">Select your nationality</option>
+            <option v-for="option in option_nationality" :key="option.symbol" :value="option.name">
+              {{ option.symbol }}: {{ option.name }}
+            </option>
+          </select>
         </div>
       </div>
       <div class="image">
@@ -71,21 +93,21 @@ const continueClicked = () => {
       <hr class="line">
       <div class="details">
         <div class="detail-forms">
-          <label for="validationDefault">Date of Birth</label>
+          <label for="validationDefault"><span class="asterick">*</span>Date of Birth</label>
           <input type="text" class="form-control" required v-model="date_of_birth" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Occupation</label>
+          <label for="validationDefault"><span class="asterick">*</span>Occupation</label>
           <input type="text" class="form-control" required v-model="occupation" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Gender</label>
+          <label for="validationDefault"><span class="asterick">*</span>Gender</label>
           <form class="radio-form">
-            <input type="radio" id="male" name="gender" value="HTML">
+            <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
             <label for="male">MALE</label><br>
-            <input type="radio" id="female" name="gender" value="CSS">
+            <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
             <label for="female">FEMALE</label><br>
-            <input type="radio" id="undefined" name="gender" value="JavaScript">
+            <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
             <label for="undefined">UNDEFINED</label>
           </form>
         </div>
@@ -94,19 +116,28 @@ const continueClicked = () => {
           <input type="text" class="form-control" required v-model="visa_no" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Country/Territory of Residence</label>
-          <input type="text" class="form-control" required v-model="country_residence" />
+          <label for="validationDefault"><span class="asterick">*</span>Country/Territory of Residence</label>
+          <select v-model="selected_country" class="form-control" id="country-Dropdown">
+            <option disabled value="">Select your country</option>
+            <option v-for="option in option_country" :key="option.symbol" :value="option.name">
+              {{ option.symbol }}: {{ option.name }}
+            </option>
+          </select>
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">City/State of Residence</label>
+          <label for="validationDefault"><span class="asterick">*</span>City/State of Residence</label>
           <input type="text" class="form-control" required v-model="city_residence" />
         </div>
         <div class="detail-forms">
-          <label for="validationDefault">Phone No.</label>
+          <label for="validationDefault"><span class="asterick">*</span>Phone No.</label>
           <input type="text" class="form-control" required v-model="phone_no" />
         </div>
       </div>
-      <button class="btn-continue" @clicked="continueClicked">Continue</button>
+      <router-link to="/arrival-card/trip-&-accomadation-information" custom v-slot="{ navigate }">
+        <button @click="() => { continueClicked(); navigate(); }" role="link" class="btn-continue">
+          Continue
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -215,5 +246,9 @@ const continueClicked = () => {
   font-size: 12px;
   margin-left: auto;
   display: block;
+}
+
+.asterick {
+  color: red;
 }
 </style>
