@@ -2,7 +2,8 @@
 import { inject, ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import ProgressBar from '@/components/ProgressBar.vue';
-import infoIcon from '@/assets/images/infoIcon.png';
+import worldIcon from '@/assets/images/worldIcon.png';
+import accomadationIcon from '@/assets/images/accomadationIcon.png';
 import data_country from '@/assets/dataCountry.json';
 
 const date_of_arrival = ref('');
@@ -26,8 +27,6 @@ const post_code = ref('')
 const address = ref('')
 const router = useRouter();
 
-
-// Transport options based on travel mode
 const getTransportOptions = (travelMode) => {
     switch (travelMode) {
         case 'AIR':
@@ -74,12 +73,12 @@ const continueClicked = () => {
     <header>
         <Navbar />
     </header>
-    <div class="container">
+    <div class="container-TA">
         <ProgressBar />
         <form @submit.prevent="onSubmit">
-            <div class="detail-container">
+            <div class="detail-container-TA">
                 <div class="image">
-                    <img :src="infoIcon">
+                    <img :src="worldIcon">
                     <h1 class="title">Trip Information</h1>
                 </div>
                 <hr class="line">
@@ -190,7 +189,7 @@ const continueClicked = () => {
 
                 </div>
                 <div class="image">
-                    <img :src="infoIcon">
+                    <img :src="accomadationIcon">
                     <h1 class="title">Accommodation Information</h1>
                 </div>
                 <hr class="line">
@@ -276,23 +275,23 @@ const continueClicked = () => {
     font-family: 'Arial', sans-serif;
 }
 
-.container {
+.container-TA {
     height: calc(150vh - 20px);;
     width: calc(100vw - 20px);
     margin: 10px;
     box-shadow: 0 0 10px #51575a;
 }
 
-.detail-container {
+.detail-container-TA {
     display: flex;
     flex-direction: column;
     justify-content: start;
     height: auto;
-    margin-top: -10%;
     width: 95vw;
     padding: 10px;
     box-shadow: 0 0 1px #51575a;
     border-radius: 1rem;
+    margin-left: 20px;
 }
 
 .title {
