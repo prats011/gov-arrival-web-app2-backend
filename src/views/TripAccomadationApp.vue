@@ -1,5 +1,6 @@
 <script setup>
 import { inject, ref, onMounted } from 'vue';
+import { useRouter } from "vue-router";
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
 import data_country from '@/assets/dataCountry.json';
@@ -23,6 +24,7 @@ const district = ref('')
 const sub_district = ref('')
 const post_code = ref('')
 const address = ref('')
+const router = useRouter();
 
 
 // Transport options based on travel mode
@@ -56,7 +58,7 @@ const onSubmit = (event) => {
     return;
   }
   continueClicked();
-  router.push("/arrival-card/");
+  router.push("/arrival-card");
 };
 
 const continueClicked = () => {
