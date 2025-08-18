@@ -148,6 +148,7 @@ const continueClicked = () => {
         <button type="submit" class="btn-continue">Continue</button>
       </div>
     </form>
+    <button class="btn-delete">Detele this traveler</button>
   </div>
 </template>
 
@@ -158,7 +159,7 @@ const continueClicked = () => {
 }
 
 .container {
-  height: calc(100vh - 60px);
+  height: calc(110vh - 60px);
   width: calc(100vw - 20px);
   margin: 10px;
   box-shadow: 0 0 10px #51575a;
@@ -255,6 +256,19 @@ const continueClicked = () => {
   font-size: 12px;
   margin-left: auto;
   display: block;
+}
+
+.btn-delete {
+  display: block;
+  padding: 10px;
+  height: fit-content;
+  border-radius: 20px;
+  font-size: 12px;
+  border: none;
+  margin-right: auto;
+  margin-top: -2%;
+  color: #ffffff;
+  background-color: rgb(27, 108, 163);
 }
 
 .asterick {

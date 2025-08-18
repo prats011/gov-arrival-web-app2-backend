@@ -51,18 +51,18 @@ onMounted(() => {
 });
 
 const onSubmit = (event) => {
-  const form = event.target;
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
-  continueClicked();
-  router.push("/arrival-card");
+    const form = event.target;
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+    continueClicked();
+    router.push("/arrival-card/health-declaration");
 };
 
 const continueClicked = () => {
-  count.value++;
-  console.log("The value of count: ", count.value);
+    count.value++;
+    console.log("The value of count: ", count.value);
 }
 
 
@@ -264,6 +264,7 @@ const continueClicked = () => {
 
                 </div>
                 <button type="submit" class="btn-continue">Continue</button>
+                <button type="previous" class="btn-prev" style="margin-left: 10px;">Previous</button>
             </div>
         </form>
     </div>
@@ -276,7 +277,8 @@ const continueClicked = () => {
 }
 
 .container-TA {
-    height: calc(150vh - 20px);;
+    height: calc(150vh - 20px);
+    ;
     width: calc(100vw - 20px);
     margin: 10px;
     box-shadow: 0 0 10px #51575a;
@@ -398,14 +400,27 @@ const continueClicked = () => {
 }
 
 .btn-continue {
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #ffffff;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  margin-top: -1mm;
-  font-size: 12px;
-  margin-left: auto;
-  display: block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: rgb(27, 108, 163);
+    border: none;
+    margin-top: -1mm;
+    font-size: 12px;
+    margin-left: auto;
+    display: block;
+}
+
+.btn-prev {
+    display: block;
+    padding: 10px;
+    height: fit-content;
+    border-radius: 20px;
+    font-size: 12px;
+    border: none;
+    margin-right: auto;
+    margin-top: -2%;
+    color: #ffffff;
+    background-color: rgb(27, 108, 163);
 }
 </style>

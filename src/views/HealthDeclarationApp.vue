@@ -70,6 +70,7 @@ const onSubmit = (event) => {
                         optionValue="code" filter placeholder="Select Countries" :maxSelectedLabels="3"
                         class="w-full md:w-80" />
                 </div>
+                <button type="previous" class="btn-prev" style="margin: 10px;">Previous</button>
                 <button type="submit" class="btn-continue">Continue</button>
             </form>
         </div>
