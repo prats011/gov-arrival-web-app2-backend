@@ -3,10 +3,8 @@ import ProgressBar from '@/components/ProgressBar.vue';
 import data_country from '@/assets/dataCountry.json';
 import healthIcon from '@/assets/images/healthicon.png';
 import { inject, ref, onMounted } from 'vue';
-import MultiSelect from 'primevue/multiselect';
 import { useRouter } from "vue-router";
 const router = useRouter();
-
 
 const count = inject('globalCount');
 

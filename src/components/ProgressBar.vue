@@ -13,13 +13,11 @@ const count = inject('globalCount')
                 <div class="progress-text">Personal Information</div>
             </div>
             <hr class="line" :class="{ 'highlited': count >= 1 }">
-            </hr>
             <div class="progress">
                 <div class="progress-circles" :class="{ 'highlited': count >= 1 }">2</div>
                 <div class="progress-text">Trip & Accommodation<br> Information</div>
             </div>
             <hr class="line" :class="{ 'highlited': count >= 2 }">
-            </hr>
             <div class="progress">
                 <div class="progress-circles" :class="{ 'highlited': count >= 2 }">3</div>
                 <div class="progress-text">Health Declaration</div>
@@ -48,6 +46,7 @@ const count = inject('globalCount')
     align-items: center;
     position: relative;
     padding: 30px 0;
+    background-color: transparent;
 }
 
 .progress-circles {
