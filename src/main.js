@@ -8,7 +8,6 @@ import Navbar from '@/components/NavbarApp.vue'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
-
 import MultiSelect from 'primevue/multiselect';
 
 const globalCount = ref(0)

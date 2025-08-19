@@ -3,11 +3,19 @@ import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
 import personalIcon from '@/assets/images/personalIcon.png';
 import data_country from '@/assets/dataCountry.json';
+import data_months from '@/assets/dataDate.json'
 import { inject } from 'vue';
 import { onMounted, ref } from 'vue';
 import { useRouter } from "vue-router";
 const router = useRouter();
 
+
+const option_month = ref([]);
+const selected_month = ref('');
+const selected_day = ref('');
+const selected_year = ref('');
+const option_day = ref([]);
+const option_year = ref([]);
 const option_country = ref([]);
 const selected_country = ref('');
 const selected_nationality = ref('');
@@ -17,7 +25,6 @@ const family_name = ref('');
 const first_name = ref('');
 const middle_name = ref('');
 const passport_no = ref('');
-const date_of_birth = ref('');
 const occupation = ref('');
 const gender = ref('');
 const visa_no = ref('');
@@ -27,6 +34,9 @@ console.log("The value of count: ", count.value);
 
 onMounted(() => {
   option_country.value = data_country;
+  option_month.value = data_months.months;
+  option_day.value = data_months.days;
+  option_year.value = data_months.years;
 });
 
 const onSubmit = (event) => {
@@ -54,7 +64,7 @@ const continueClicked = () => {
     Arrival Card > Add Arrival Card
   </header>
   <div class="container">
-    <ProgressBar /> 
+    <ProgressBar />
     <form @submit.prevent="onSubmit"><!--https://youtu.be/XQJegKW0ukU?si=PMuY2D_1G3o-SRCE-->
       <div class="detail-container">
         <div class="image">
@@ -98,8 +108,27 @@ const continueClicked = () => {
         <hr class="line">
         <div class="details">
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Date of Birth</label>
-            <input type="date" class="form-control" required v-model="date_of_birth" />
+            <label><span class="asterick">*</span>Date of Birth</label>
+            <div class="dob-container">
+              <select v-model="selected_year" class="dob-select">
+                <option disabled value="">yyyy</option>
+                <option v-for="option in option_year" :key="option.value" :value="option.value">
+                  {{ option.name }}
+                </option>
+              </select>
+              <select v-model="selected_month" class="dob-select">
+                <option disabled value="">mm</option>
+                <option v-for="option in option_month" :key="option.value" :value="option.value">
+                  {{ option.name }}
+                </option>
+              </select>
+              <select v-model="selected_day" class="dob-select">
+                <option disabled value="">dd</option>
+                <option v-for="option in option_day" :key="option.value" :value="option.value">
+                  {{ option.name }}
+                </option>
+              </select>
+            </div>
           </div>
           <div class="detail-forms">
             <label for="validationDefault"><span class="asterick">*</span>Occupation</label>
@@ -227,7 +256,6 @@ const continueClicked = () => {
   min-width: 120px;
 }
 
-
 .form-control {
   padding: 8px 12px;
   border: 1px solid #d1d5db;
@@ -244,6 +272,10 @@ const continueClicked = () => {
   width: 100%;
   font-size: 12px;
   display: inline-flex;
+}
+
+.radio-form label {
+  padding: 10px;
 }
 
 .btn-continue {
@@ -269,6 +301,23 @@ const continueClicked = () => {
   margin-top: -2%;
   color: #ffffff;
   background-color: rgb(27, 108, 163);
+}
+
+.dob-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.dob-select {
+  flex: 1;
+  border-radius: 2rem;
+  text-align: center;
+  height: 5vh;
+  font-size: 13px;
+  color: #000000;
+  background: transparent;
+  outline: none;
 }
 
 .asterick {
