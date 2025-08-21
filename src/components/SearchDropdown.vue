@@ -57,6 +57,7 @@ const selectOption = (option) => {
     position: relative;
     display: inline-block;
     width: 500px;
+    color: #000;
 }
 
 .dropbtn {
@@ -68,6 +69,7 @@ const selectOption = (option) => {
     cursor: pointer;
     border-radius: 6px;
     font-size: 12px;
+    color: #000;
 }
 
 .dropdown-content {
@@ -89,11 +91,13 @@ const selectOption = (option) => {
     margin: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    color: #000;
 }
 
 .dropdown-item {
     padding: 8px 12px;
     cursor: pointer;
+    color: #000;
 }
 
 .dropdown-item:hover {

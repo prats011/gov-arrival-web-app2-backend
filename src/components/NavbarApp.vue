@@ -15,6 +15,6 @@ header {
   font-size: 13px;
   color: #FFF;
   display: flex;
-  justify-content:flex-end;
+  justify-content:flex-start;
 }
 </style>

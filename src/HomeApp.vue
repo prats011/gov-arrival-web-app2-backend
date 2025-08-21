@@ -47,8 +47,8 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
           </button>
         </div>
 
-        <a href="#" class="bottom-text">User's Guide</a>
-        <p class="bottom-text">Copyright 2024 Project. All rights reserved.<br>Version 2025.07.00-0398</p>
+        <a href="https://tdac.immigration.go.th/manual/en/index.html" class="bottom-text">User's Guide</a>
+        <p class="bottom-text">Copyright 2025 Project. All rights reserved.<br>Version 0.1</p>
 
 
       </div>

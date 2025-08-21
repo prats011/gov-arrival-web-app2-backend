@@ -1,23 +1,34 @@
-import { createApp, ref } from 'vue'
+import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
+import { ref } from 'vue'
 
+import Dropdown from '@/components/DropdownApp.vue'
 import Navbar from '@/components/NavbarApp.vue'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
+
 import MultiSelect from 'primevue/multiselect';
-import 'primeicons/primeicons.css';
 
-const globalCount = ref(0);
-const app = createApp(App);
+const globalCount = ref(0)
+const app = createApp(App)
 
-app.provide('globalCount', globalCount);
-app.component('Navbar', Navbar);
-app.component('MultiSelect', MultiSelect);
+app.provide('globalCount', globalCount)
+app.component('Dropdown', Dropdown)
+app.component('Navbar', Navbar)
+app.component('MultiSelect', MultiSelect)
 
-app.use(PrimeVue, { ripple: true });
-app.use(Aura);
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            prefix: 'p',
+            darkModeSelector: 'light',
+            cssLayer: false
+        }
+    }
+});
 
-app.use(router);
-app.mount('#app');
+app.use(router)
+app.mount('#app')
