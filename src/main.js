@@ -2,7 +2,6 @@ import { createApp, ref } from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 
-import Dropdown from '@/components/DropdownApp.vue'
 import Navbar from '@/components/NavbarApp.vue'
 
 import PrimeVue from 'primevue/config';
@@ -14,8 +13,6 @@ const globalCount = ref(0);
 const app = createApp(App);
 
 app.provide('globalCount', globalCount);
-
-app.component('Dropdown', Dropdown);
 app.component('Navbar', Navbar);
 app.component('MultiSelect', MultiSelect);
 

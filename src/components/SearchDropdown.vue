@@ -36,7 +36,7 @@ const selectOption = (option) => {
 </script>
 
 <template>
-    <div class="dropdown">
+    <div class="dropdownCountry">
         <button type="button" class="dropbtn" @click="isOpen = !isOpen">
             {{ selected ? selected[props.labelField] : placeholder }}
         </button>
@@ -53,7 +53,7 @@ const selectOption = (option) => {
 </template>
 
 <style>
-.dropdown {
+.dropdownCountry {
     position: relative;
     display: inline-block;
     width: 500px;

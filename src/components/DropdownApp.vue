@@ -43,6 +43,7 @@ function changeLanguage() {
   font-size: 1rem;
   padding: 0rem 0.75rem;
   border: none;
+  width: 100px;
 }
 
 .dropdown:focus {

@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import Dropdown from '@/components/DropdownApp.vue'
 const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인' ])
-
-
 
 </script>
 
@@ -74,7 +73,6 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
   height: 70vh;
   box-shadow: 0 0 5px #1172A7;
 }
-
 
 .top {
   display: flex;
