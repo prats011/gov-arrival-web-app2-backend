@@ -67,7 +67,7 @@ const onSubmit = (event) => {
     return;
   }
   continueClicked();
-  router.push("/arrival-card/trip-&-accomadation-information");
+  router.push("/arrival-card/trip-&-accomodation-information");
 };
 
 //Websites used
