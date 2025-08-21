@@ -5,8 +5,20 @@ import ProgressBar from '@/components/ProgressBar.vue';
 import worldIcon from '@/assets/images/worldIcon.png';
 import accomadationIcon from '@/assets/images/accomadationIcon.png';
 import data_country from '@/assets/dataCountry.json';
+import data_months from '@/assets/dataDate.json';
+import SearchDropdown from '@/components/SearchDropdown.vue';
 
-const date_of_arrival = ref('');
+const option_month = ref([]);
+const option_day = ref([]);
+const option_year = ref([]);
+const selected_year_of_arrival = ref('');
+const selected_month_of_arrival = ref('');
+const selected_day_of_arrival = ref('');
+
+const selected_year_of_departure = ref('');
+const selected_month_of_departure = ref('');
+const selected_day_of_departure = ref('');
+
 const selected_country = ref('');
 const purpose_of_travel = ref('');
 const purpose_other = ref('');
@@ -14,7 +26,6 @@ const mode_of_travel = ref('');
 const mode_of_transport = ref('');
 const mode_of_transport_other = ref('');
 const flight_no = ref('');
-const date_of_departure = ref('');
 const dep_mode_of_travel = ref('');
 const dep_mode_of_transport = ref('');
 const dep_mode_of_transport_other = ref('');
@@ -47,7 +58,14 @@ const count = inject('globalCount');
 console.log("The value of count: ", count.value);
 
 onMounted(() => {
-    option_country.value = data_country;
+    option_month.value = data_months.months;
+    option_day.value = data_months.days;
+    option_year.value = data_months.years;
+    option_country.value = data_country.map(c => ({
+        country: c.country,
+        symbol: c.symbol,
+        cities: c.cities
+    }));
 });
 
 const onSubmit = (event) => {
@@ -84,20 +102,33 @@ const continueClicked = () => {
                 <hr class="line">
                 <div class="details">
                     <p class="text">Arrival Information</p><br>
-
                     <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Date of Arrival</label>
-                        <input type="date" v-model="date_of_arrival" class="form-control" required />
+                        <label>Date of Arrival</label>
+                        <div class="dob-container">
+                            <select v-model="selected_year_of_arrival" class="dob-select">
+                                <option disabled value="">yyyy</option>
+                                <option v-for="option in option_year" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                            <select v-model="selected_month_of_arrival" class="dob-select">
+                                <option disabled value="">mm</option>
+                                <option v-for="option in option_month" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                            <select v-model="selected_day_of_arrival" class="dob-select">
+                                <option disabled value="">dd</option>
+                                <option v-for="option in option_day" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Country/Territory where you Boarded</label>
-                        <select v-model="selected_country" class="form-control" required>
-                            <option disabled value="">Select or enter</option>
-                            <option v-for="option in option_country" :key="option.symbol" :value="option.country">
-                                {{ option.symbol }}: {{ option.country }}
-                            </option>
-                        </select>
+                        <SearchDropdown v-model="selected_country" :options="option_country"
+                            placeholder="Select a country" labelField="country" />
                     </div>
 
                     <div class="detail-forms">
@@ -155,7 +186,26 @@ const continueClicked = () => {
 
                     <div class="detail-forms">
                         <label>Date of Departure</label>
-                        <input type="date" v-model="date_of_departure" class="form-control" />
+                        <div class="dob-container">
+                            <select v-model="selected_year_of_departure" class="dob-select">
+                                <option disabled value="">yyyy</option>
+                                <option v-for="option in option_year" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                            <select v-model="selected_month_of_departure" class="dob-select">
+                                <option disabled value="">mm</option>
+                                <option v-for="option in option_month" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                            <select v-model="selected_day_of_departure" class="dob-select">
+                                <option disabled value="">dd</option>
+                                <option v-for="option in option_day" :key="option.value" :value="option.value">{{
+                                    option.name }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="detail-forms">
@@ -194,7 +244,6 @@ const continueClicked = () => {
                 </div>
                 <hr class="line">
                 <div class="details">
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Type of Accommodation in Thailand</label>
                         <div class="flex-row">
@@ -210,46 +259,21 @@ const continueClicked = () => {
                                 placeholder="Please specify" :disabled="type_of_accomadation !== 'Others'" />
                         </div>
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Province</label>
-                        <div class="flex-row">
-                            <select v-model="province" class="form-control" required>
-                                <option disabled value="">Select Province</option>
-                                <option>Province 1</option>
-                                <option>Province 2</option>
-                                <option>Province 3</option>
-                                <option>Province 3</option>
-                                <option>Province 4</option>
-                            </select>
-                        </div>
+                        <input type="text" v-model="province" class="form-control"
+                            placeholder="Select Province"></input>
                     </div>
 
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>District. Area</label>
-                        <div class="flex-row">
-                            <select v-model="district" class="form-control" required>
-                                <option disabled value="">Select District</option>
-                                <option>District 1</option>
-                                <option>District 2</option>
-                                <option>District 3</option>
-                                <option>District 4</option>
-                                <option>District 5</option>
-                            </select>
-                        </div>
+                        <input type="text" v-model="district" class="form-control"
+                            placeholder="Select District"></input>
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Sub-District/Sub-Area</label>
-                        <div class="flex-row">
-                            <select v-model="sub_district" class="form-control" required>
-                                <option disabled value="">Select Sub-District</option>
-                                <option>Sub-District 1</option>
-                                <option>Sub-District 2</option>
-                                <option>Sub-District 3</option>
-                                <option>Sub-District 4</option>
-                                <option>Sub-District 5</option>
-                            </select>
-                        </div>
+                        <input type="text" v-model="sub_district" class="form-control"
+                            placeholder="Select Sub-District"></input>
                     </div>
 
                     <div class="detail-forms">
@@ -302,6 +326,23 @@ const continueClicked = () => {
     font-weight: 300;
     margin-top: 5px;
     padding: 0;
+}
+
+.dob-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.dob-select {
+    flex: 1;
+    border-radius: 2rem;
+    text-align: center;
+    height: 5vh;
+    font-size: 13px;
+    color: #000000;
+    background: transparent;
+    outline: none;
 }
 
 .text {

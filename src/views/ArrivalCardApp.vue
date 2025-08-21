@@ -3,22 +3,23 @@ import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '@/assets/images/infoIcon.png';
 import personalIcon from '@/assets/images/personalIcon.png';
 import data_country from '@/assets/dataCountry.json';
-import data_months from '@/assets/dataDate.json'
-import { inject } from 'vue';
-import { onMounted, ref } from 'vue';
-import { useRouter } from "vue-router";
-const router = useRouter();
+import data_months from '@/assets/dataDate.json';
+import SearchDropdown from '@/components/SearchDropdown.vue';
+import { ref, onMounted, inject, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const count = inject('globalCount');
 
 const option_month = ref([]);
-const selected_month = ref('');
-const selected_day = ref('');
-const selected_year = ref('');
 const option_day = ref([]);
 const option_year = ref([]);
-const option_country = ref([]);
-const selected_country = ref('');
-const selected_nationality = ref('');
+const selected_year = ref('');
+const selected_month = ref('');
+const selected_day = ref('');
+
+const selected_nationality = ref(null);
+const selected_country = ref(null);
 const selected_city = ref('');
 
 const family_name = ref('');
@@ -29,15 +30,35 @@ const occupation = ref('');
 const gender = ref('');
 const visa_no = ref('');
 const phone_no = ref('');
-const count = inject('globalCount');
-console.log("The value of count: ", count.value);
+
+const option_country = ref([]);
+const option_nationality = ref([]);
 
 onMounted(() => {
-  option_country.value = data_country;
   option_month.value = data_months.months;
   option_day.value = data_months.days;
   option_year.value = data_months.years;
+
+  option_country.value = data_country.map(c => ({
+    country: c.country,
+    symbol: c.symbol,
+    cities: c.cities
+  }));
+
+  option_nationality.value = data_country.map(c => ({
+    name: c.name,
+    symbol: c.symbol,
+    country: c.country
+  }));
 });
+
+watch(selected_country, () => {
+  selected_city.value = '';
+});
+
+const continueClicked = () => {
+  count.value++;
+};
 
 const onSubmit = (event) => {
   const form = event.target;
@@ -49,13 +70,10 @@ const onSubmit = (event) => {
   router.push("/arrival-card/trip-&-accomadation-information");
 };
 
-const continueClicked = () => {
-  count.value++;
-  console.log("The value of count: ", count.value);
-}
-
-//Websites used 
+//Websites used
 //https://www.w3schools.com/html/html_forms.asp
+//https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG
+//https://youtu.be/XQJegKW0ukU?si=PMuY2D_1G3o-SRCE
 </script>
 
 <template>
@@ -63,123 +81,124 @@ const continueClicked = () => {
     <Navbar />
     Arrival Card > Add Arrival Card
   </header>
+
   <div class="container">
     <ProgressBar />
-    <form @submit.prevent="onSubmit"><!--https://youtu.be/XQJegKW0ukU?si=PMuY2D_1G3o-SRCE-->
+    <form @submit.prevent="onSubmit">
       <div class="detail-container">
+
         <div class="image">
           <img :src="infoIcon">
           <h1 class="title">Personal Information In Passport</h1>
         </div>
         <hr class="line">
+
         <div class="details">
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Family Name</label>
+            <label><span class="asterick">*</span>Family Name</label>
             <input type="text" class="form-control" required v-model="family_name"
               placeholder="Only letters A-Z are allowed. Enter '-' if none" />
           </div>
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>First Name</label>
+            <label><span class="asterick">*</span>First Name</label>
             <input type="text" class="form-control" required v-model="first_name"
               placeholder="Only letters A-Z are allowed." />
           </div>
           <div class="detail-forms">
-            <label for="validationDefault">Middle Name</label>
+            <label>Middle Name</label>
             <input type="text" class="form-control" v-model="middle_name" placeholder="Only letters A-Z are allowed." />
           </div>
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Passport No.</label>
+            <label><span class="asterick">*</span>Passport No.</label>
             <input type="text" class="form-control" required v-model="passport_no" />
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Nationality/Citizenship</label>
-            <select v-model="selected_nationality" class="form-control" id="nationality-Dropdown">
-              <option disabled value="">Select your nationality</option>
-              <option v-for="option in option_country" :key="option.symbol" :value="option.name">
-                {{ option.symbol }}: {{ option.name }}
-              </option>
-            </select>
+            <label><span class="asterick">*</span>Nationality/Citizenship</label>
+            <SearchDropdown v-model="selected_nationality" :options="option_nationality"
+              placeholder="Select your nationality" labelField="name" />
           </div>
         </div>
+
         <div class="image">
           <img :src="personalIcon">
           <h1 class="title">Personal Information</h1>
         </div>
         <hr class="line">
+
         <div class="details">
           <div class="detail-forms">
             <label><span class="asterick">*</span>Date of Birth</label>
             <div class="dob-container">
               <select v-model="selected_year" class="dob-select">
                 <option disabled value="">yyyy</option>
-                <option v-for="option in option_year" :key="option.value" :value="option.value">
-                  {{ option.name }}
+                <option v-for="option in option_year" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
               </select>
               <select v-model="selected_month" class="dob-select">
                 <option disabled value="">mm</option>
-                <option v-for="option in option_month" :key="option.value" :value="option.value">
-                  {{ option.name }}
+                <option v-for="option in option_month" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
               </select>
               <select v-model="selected_day" class="dob-select">
                 <option disabled value="">dd</option>
-                <option v-for="option in option_day" :key="option.value" :value="option.value">
-                  {{ option.name }}
+                <option v-for="option in option_day" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
               </select>
             </div>
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Occupation</label>
+            <label><span class="asterick">*</span>Occupation</label>
             <input type="text" class="form-control" required v-model="occupation" />
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Gender</label>
+            <label><span class="asterick">*</span>Gender</label>
             <form class="radio-form">
               <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
-              <label for="male">MALE</label><br>
+              <label for="male">MALE</label>
               <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
-              <label for="female">FEMALE</label><br>
+              <label for="female">FEMALE</label>
               <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
               <label for="undefined">UNDEFINED</label>
             </form>
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault">Visa No.</label>
+            <label>Visa No.</label>
             <input type="text" class="form-control" v-model="visa_no" />
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Country/Territory of Residence</label>
-            <select v-model="selected_country" class="form-control" id="country-Dropdown">
-              <option disabled value="">Select your country</option>
-              <option v-for="option in option_country" :key="option.symbol" :value="option.country">
-                {{ option.symbol }}: {{ option.country }}
-              </option>
-            </select>
+            <label>Select Country</label>
+            <SearchDropdown v-model="selected_country" :options="option_country" placeholder="Select a country"
+              labelField="country" />
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>City/State of Residence</label>
-            <select v-model="selected_city" class="form-control" id="country-Dropdown">
+            <label><span class="asterick">*</span>City/State of Residence</label>
+            <select v-model="selected_city" class="form-control">
               <option disabled value="">Select your city</option>
-              <option v-for="option in option_country.find(c => c.country === selected_country)?.cities" :key="option"
-                :value="option"> <!--https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG-->
-                {{ option }}
-              </option>
+              <option v-for="city in selected_country?.cities" :key="city" :value="city">{{ city }}</option>
             </select>
           </div>
+
           <div class="detail-forms">
-            <label for="validationDefault"><span class="asterick">*</span>Phone No.</label>
-            <input type="tel" id="phone" name="phone" class="form-control" required v-model="phone_no"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Format: xxx-xxx-xxxx" />
+            <label><span class="asterick">*</span>Phone No.</label>
+            <input type="tel" class="form-control" required v-model="phone_no" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+              placeholder="Format: xxx-xxx-xxxx" />
           </div>
         </div>
+
         <button type="submit" class="btn-continue">Continue</button>
       </div>
     </form>
-    <button class="btn-delete">Detele this traveler</button>
+
+    <button class="btn-delete">Delete this traveler</button>
   </div>
 </template>
+
 
 <style scoped>
 * {
@@ -322,5 +341,93 @@ const continueClicked = () => {
 
 .asterick {
   color: red;
+}
+</style>
+
+<style>
+.card .p-multiselect {
+  display: block;
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 14px;
+  color: #333;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.p-multiselect-label {
+  color: #666;
+  font-style: normal;
+  white-space: normal;
+  font-size: 13px;
+}
+
+.p-multiselect-panel {
+  position: absolute !important;
+  z-index: 1050 !important;
+  /* higher than Bootstrap, modals, etc. */
+  min-width: 100% !important;
+  /* so it matches the input width */
+  background: #fff !important;
+  border: 1px solid #d1d5db !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card .p-multiselect-panel {
+  min-width: 100% !important;
+  max-width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  padding: 0.5rem 0;
+  position: absolute;
+}
+
+
+.p-multiselect-token {
+  display: inline-block;
+  background-color: #1B6CA3;
+  color: #fff;
+  border-radius: 0.25rem;
+  padding: 2px 6px;
+  margin: 2px 4px 4px 0;
+  font-size: 13px;
+}
+
+.p-multiselect-item {
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+}
+
+
+.p-multiselect-item:hover {
+  background-color: rgba(27, 108, 163, 0.1);
+  cursor: pointer;
+}
+
+.p-multiselect-filter-container input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  margin: 4px 0;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.card {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.detail-forms .card {
+  width: 100%;
+  max-width: 100%;
 }
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const languages = ref(['English', 'French', 'Spanish'])
+const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인' ])
 
 
 
