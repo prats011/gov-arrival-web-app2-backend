@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Dropdown from '@/components/DropdownApp.vue'
-const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인' ])
+const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인'])
 
 </script>
 
@@ -9,7 +9,7 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
   <div id="App">
     <header>
       <Navbar />
-      <nav>
+      <nav class="language">
         <Dropdown title="Language" :items="languages" />
       </nav>
     </header>
@@ -96,6 +96,13 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
 
 .content {
   margin-top: 1rem;
+}
+
+.language {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .buttons {
