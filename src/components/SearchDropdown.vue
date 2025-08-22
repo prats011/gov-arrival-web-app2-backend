@@ -24,7 +24,8 @@ const selected = ref(null)
 
 const filteredOptions = computed(() =>
     props.options.filter(o =>
-        o[props.labelField]?.toLowerCase().includes(search.value.toLowerCase())
+        o[props.labelField]?.toLowerCase().includes(search.value.toLowerCase()) ||
+        o[props.symbol]?.toLowerCase().includes(search.value.toLowerCase())
     )
 )
 
@@ -45,7 +46,7 @@ const selectOption = (option) => {
             <input type="text" v-model="search" placeholder="Search..." class="search-input" />
             <div v-for="option in filteredOptions" :key="option.symbol" class="dropdown-item"
                 @click="selectOption(option)">
-                {{ option[props.labelField] }}
+                {{ option.symbol }}: {{ option[props.labelField] }}
             </div>
         </div>
 

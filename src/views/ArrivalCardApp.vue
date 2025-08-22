@@ -30,6 +30,7 @@ const occupation = ref('');
 const gender = ref('');
 const visa_no = ref('');
 const phone_no = ref('');
+const phone_no_code = ref('');
 
 const option_country = ref([]);
 const option_nationality = ref([]);
@@ -171,7 +172,7 @@ const onSubmit = (event) => {
           </div>
 
           <div class="detail-forms">
-            <label>Select Country</label>
+            <label><span class="asterick">*</span>Country/Territory of Residence</label>
             <SearchDropdown v-model="selected_country" :options="option_country" placeholder="Select a country"
               labelField="country" />
           </div>
@@ -186,8 +187,9 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Phone No.</label>
-            <input type="tel" class="form-control" required v-model="phone_no" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              placeholder="Format: xxx-xxx-xxxx" />
+            <p style="color: rgb(27, 108, 163); font-size: 15px;">+</p>
+            <input type="num" class="form-phone" required v-model="phone_no_code" placeholder="Code" pattern="[0-9]{2}"></input>
+            <input type="tel" class="form-control" style="width: 90%;" v-model="phone_no" pattern="[0-9]{9}" placeholder="Phone No." />
           </div>
         </div>
 
@@ -286,6 +288,17 @@ const onSubmit = (event) => {
   box-sizing: border-box;
 }
 
+.form-phone {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #374151;
+  background-color: #ffffff;
+  max-width: 10%;
+
+}
+
 .radio-form {
   padding: 8px 20px;
   width: 100%;
@@ -317,7 +330,7 @@ const onSubmit = (event) => {
   font-size: 12px;
   border: none;
   margin-right: auto;
-  margin-top: -2%;
+  margin-top: -3%;
   color: #ffffff;
   background-color: rgb(27, 108, 163);
 }

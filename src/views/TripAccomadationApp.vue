@@ -90,6 +90,7 @@ const continueClicked = () => {
 <template>
     <header>
         <Navbar />
+        Arrival Card > Add Arrival Card
     </header>
     <div class="container-TA">
         <ProgressBar />
@@ -103,7 +104,7 @@ const continueClicked = () => {
                 <div class="details">
                     <p class="text">Arrival Information</p><br>
                     <div class="detail-forms">
-                        <label>Date of Arrival</label>
+                        <label>Date of Arrival</label> 
                         <div class="dob-container">
                             <select v-model="selected_year_of_arrival" class="dob-select">
                                 <option disabled value="">yyyy</option>
@@ -185,7 +186,7 @@ const continueClicked = () => {
                     <p class="text">Departure Information</p><br>
 
                     <div class="detail-forms">
-                        <label>Date of Departure</label>
+                        <label><span class="asterisk">*</span>Date of Departure</label>
                         <div class="dob-container">
                             <select v-model="selected_year_of_departure" class="dob-select">
                                 <option disabled value="">yyyy</option>
@@ -209,7 +210,7 @@ const continueClicked = () => {
                     </div>
 
                     <div class="detail-forms">
-                        <label>Mode of Travel</label>
+                        <label><span class="asterisk">*</span>Mode of Travel</label>
                         <div class="radio-group">
                             <label><input type="radio" value="AIR" v-model="dep_mode_of_travel" /> AIR</label>
                             <label><input type="radio" value="LAND" v-model="dep_mode_of_travel" /> LAND</label>
@@ -218,7 +219,7 @@ const continueClicked = () => {
                     </div>
 
                     <div class="detail-forms">
-                        <label>Mode of Transport</label>
+                        <label><span class="asterisk">*</span>Mode of Transport</label>
                         <div class="flex-row">
                             <select v-model="dep_mode_of_transport" class="form-control">
                                 <option disabled value="">Select</option>
@@ -233,7 +234,7 @@ const continueClicked = () => {
                     </div>
 
                     <div class="detail-forms">
-                        <label>Flight No./Vehicle No.</label>
+                        <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
                         <input type="text" v-model="dep_flight_no" class="form-control" />
                     </div>
 
@@ -262,18 +263,18 @@ const continueClicked = () => {
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Province</label>
                         <input type="text" v-model="province" class="form-control"
-                            placeholder="Select Province"></input>
+                            placeholder="Enter Province"></input>
                     </div>
 
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>District. Area</label>
                         <input type="text" v-model="district" class="form-control"
-                            placeholder="Select District"></input>
+                            placeholder="Enter District"></input>
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Sub-District/Sub-Area</label>
                         <input type="text" v-model="sub_district" class="form-control"
-                            placeholder="Select Sub-District"></input>
+                            placeholder="Enter Sub-District"></input>
                     </div>
 
                     <div class="detail-forms">
@@ -283,7 +284,7 @@ const continueClicked = () => {
 
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Address</label>
-                        <textarea v-model="address" placeholder="add Address Here" class="form-control"></textarea>
+                        <textarea v-model="address" placeholder="Add Address Here" class="form-control"></textarea>
                     </div>
 
                 </div>
