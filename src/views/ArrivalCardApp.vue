@@ -320,12 +320,13 @@ const onSubmit = (event) => {
   font-size: 12px;
   margin-left: auto;
   display: block;
+  height: 40px;
 }
 
 .btn-delete {
   display: block;
   padding: 10px;
-  height: fit-content;
+  height: 40px;
   border-radius: 20px;
   font-size: 12px;
   border: none;
