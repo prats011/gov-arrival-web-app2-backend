@@ -62,7 +62,7 @@ onMounted(() => {
     option_day.value = data_months.days;
     option_year.value = data_months.years;
     option_country.value = data_country.map(c => ({
-        country: c.country,
+        country: `${c.symbol}: ${c.country}`,
         symbol: c.symbol,
         cities: c.cities
     }));
@@ -104,7 +104,7 @@ const continueClicked = () => {
                 <div class="details">
                     <p class="text">Arrival Information</p><br>
                     <div class="detail-forms">
-                        <label>Date of Arrival</label> 
+                        <label>Date of Arrival</label>
                         <div class="dob-container">
                             <select v-model="selected_year_of_arrival" class="dob-select">
                                 <option disabled value="">yyyy</option>
@@ -128,8 +128,8 @@ const continueClicked = () => {
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Country/Territory where you Boarded</label>
-                        <SearchDropdown v-model="selected_country" :options="option_country"
-                            placeholder="Select a country" labelField="country" />
+                        <Select v-model="selected_country" :options="option_country" optionLabel="country"
+                            placeholder="Select a City" />
                     </div>
 
                     <div class="detail-forms">
@@ -262,14 +262,12 @@ const continueClicked = () => {
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Province</label>
-                        <input type="text" v-model="province" class="form-control"
-                            placeholder="Enter Province"></input>
+                        <input type="text" v-model="province" class="form-control" placeholder="Enter Province"></input>
                     </div>
 
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>District. Area</label>
-                        <input type="text" v-model="district" class="form-control"
-                            placeholder="Enter District"></input>
+                        <input type="text" v-model="district" class="form-control" placeholder="Enter District"></input>
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Sub-District/Sub-Area</label>
