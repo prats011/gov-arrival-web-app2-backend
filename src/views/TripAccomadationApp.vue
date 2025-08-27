@@ -376,9 +376,20 @@ const continueClicked = () => {
 .countrySelect {
     width: 100%;
     box-sizing: border-box;
-    height: 30px;
+    max-height: 40px;
 }
 
+.countrySelect :deep(.p-select-label) {
+    font-size: 12px !important;
+}
+
+.countrySelect :deep(.p-select-items-wrapper .p-select-item) {
+    font-size: 8px !important;
+}
+
+.countrySelect :deep(.p-select-filter-container input) {
+    font-size: 8px !important;
+}
 
 .flex-row {
     display: flex;
