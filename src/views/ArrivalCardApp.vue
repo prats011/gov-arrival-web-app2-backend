@@ -18,8 +18,8 @@ const selected_year = ref('');
 const selected_month = ref('');
 const selected_day = ref('');
 
-const selected_nationality = ref(null);
-const selected_country = ref(null);
+const selected_nationality = ref('');
+const selected_country = ref('');
 const selected_city = ref('');
 
 const family_name = ref('');
@@ -41,7 +41,7 @@ onMounted(() => {
   option_year.value = data_months.years;
 
   option_country.value = data_country.map(c => ({
-    country: c.country,
+    country: `${c.symbol}: ${c.country}`,
     symbol: c.symbol,
     cities: c.cities
   }));
@@ -60,6 +60,27 @@ watch(selected_country, () => {
 const continueClicked = () => {
   count.value++;
 };
+
+
+const deleteClicked = () => {
+  family_name.value = '';
+  first_name.value = '';
+  middle_name.value = '';
+  passport_no.value = '';
+  occupation.value = '';
+  gender.value = '';
+  visa_no.value = '';
+  phone_no.value = '';
+  phone_no_code.value = '';
+  selected_year.value = '';
+  selected_month.value = '';
+  selected_day.value = '';
+  selected_nationality.value = '';
+  selected_country.value = '';
+  selected_city.value = '';
+}
+
+
 
 const onSubmit = (event) => {
   const form = event.target;
@@ -82,10 +103,10 @@ const onSubmit = (event) => {
     <Navbar />
     Arrival Card > Add Arrival Card
   </header>
+  <form @submit.prevent="onSubmit">
+    <div class="container-tp">
+      <ProgressBar />
 
-  <div class="container">
-    <ProgressBar />
-    <form @submit.prevent="onSubmit">
       <div class="detail-container">
 
         <div class="image">
@@ -116,8 +137,8 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Nationality/Citizenship</label>
-            <SearchDropdown v-model="selected_nationality" :options="option_nationality"
-              placeholder="Select your nationality" labelField="name" />
+            <Select v-model="selected_nationality" :options="option_nationality" optionLabel="name"
+              placeholder="Select a Nationality" :filter="true" filterBy="name" />
           </div>
         </div>
 
@@ -156,14 +177,14 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Gender</label>
-            <form class="radio-form">
+            <div class="radio-form">
               <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
               <label for="male">MALE</label>
               <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
               <label for="female">FEMALE</label>
               <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
               <label for="undefined">UNDEFINED</label>
-            </form>
+            </div>
           </div>
 
           <div class="detail-forms">
@@ -173,32 +194,32 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Country/Territory of Residence</label>
-            <SearchDropdown v-model="selected_country" :options="option_country" placeholder="Select a country"
-              labelField="country" />
+            <Select v-model="selected_country" :options="option_country" optionLabel="country"
+              placeholder="Select a Country" :filter="true" filterBy="country" />
           </div>
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>City/State of Residence</label>
-            <select v-model="selected_city" class="form-control">
-              <option disabled value="">Select your city</option>
-              <option v-for="city in selected_country?.cities" :key="city" :value="city">{{ city }}</option>
-            </select>
+            <Select v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
+              :filter="true" :disabled="!selected_country" />
           </div>
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Phone No.</label>
             <p style="color: rgb(27, 108, 163); font-size: 15px;">+</p>
-            <input type="num" class="form-phone" required v-model="phone_no_code" placeholder="Code" pattern="[0-9]{2}"></input>
-            <input type="tel" class="form-control" style="width: 90%;" v-model="phone_no" pattern="[0-9]{9}" placeholder="Phone No." />
+            <input type="num" class="form-phone" required v-model="phone_no_code" placeholder="Code"
+              pattern="[0-9]{2}"></input>
+            <input type="tel" class="form-control" style="width: 90%;" v-model="phone_no" pattern="[0-9]{9}"
+              placeholder="Phone No." />
           </div>
         </div>
-
+      </div>
+      <div class="btns">
+        <button type="button" class="btn-delete" @click="deleteClicked()">Delete this traveler</button>
         <button type="submit" class="btn-continue">Continue</button>
       </div>
-    </form>
-
-    <button class="btn-delete">Delete this traveler</button>
-  </div>
+    </div>
+  </form>
 </template>
 
 
@@ -208,23 +229,24 @@ const onSubmit = (event) => {
   font-family: 'Arial', sans-serif;
 }
 
-.container {
-  height: calc(110vh - 60px);
+.container-tp {
+  height: calc(110vh - 20px);
   width: calc(100vw - 20px);
   margin: 10px;
   box-shadow: 0 0 10px #51575a;
+  justify-items: center;
 }
 
 .detail-container {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  height: 70vh;
+  height: auto;
   width: 95vw;
-  margin-top: -100px;
   padding: 10px;
   box-shadow: 0 0 1px #51575a;
   border-radius: 1rem;
+  margin-left: 20px;
 }
 
 .title {
@@ -254,7 +276,6 @@ const onSubmit = (event) => {
 .details {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
   gap: 20px 40px;
   padding: 20px;
   align-items: start;
@@ -310,30 +331,40 @@ const onSubmit = (event) => {
   padding: 10px;
 }
 
+.btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 95vw;
+  gap: 10px;
+  margin-left: 20px;
+  flex-wrap: nowrap;
+  margin-top: 10px;
+}
+
 .btn-continue {
   padding: 5px 10px;
   border-radius: 20px;
   color: #ffffff;
   background-color: rgb(27, 108, 163);
   border: none;
-  margin-top: -1mm;
   font-size: 12px;
-  margin-left: auto;
-  display: block;
   height: 40px;
+  width: 150px;
+  margin: 0;
 }
 
 .btn-delete {
-  display: block;
   padding: 10px;
   height: 40px;
   border-radius: 20px;
   font-size: 12px;
   border: none;
-  margin-right: auto;
-  margin-top: -3%;
   color: #ffffff;
   background-color: rgb(27, 108, 163);
+  width: 150px;
+  margin: 0;
 }
 
 .dob-container {

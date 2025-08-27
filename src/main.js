@@ -11,7 +11,7 @@ import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 
 import MultiSelect from 'primevue/multiselect';
-import Select from 'primevue/select';
+import Select from 'primevue/select'
 
 const globalCount = ref(0)
 const app = createApp(App)

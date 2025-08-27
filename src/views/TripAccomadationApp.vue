@@ -11,6 +11,7 @@ import SearchDropdown from '@/components/SearchDropdown.vue';
 const option_month = ref([]);
 const option_day = ref([]);
 const option_year = ref([]);
+
 const selected_year_of_arrival = ref('');
 const selected_month_of_arrival = ref('');
 const selected_day_of_arrival = ref('');
@@ -29,13 +30,13 @@ const flight_no = ref('');
 const dep_mode_of_travel = ref('');
 const dep_mode_of_transport = ref('');
 const dep_mode_of_transport_other = ref('');
-const type_of_accomadation = ref('')
-const type_other = ref('')
-const province = ref('')
-const district = ref('')
-const sub_district = ref('')
-const post_code = ref('')
-const address = ref('')
+const type_of_accommodation = ref('');
+const type_other = ref('');
+const province = ref('');
+const district = ref('');
+const sub_district = ref('');
+const post_code = ref('');
+const address = ref('');
 const router = useRouter();
 
 const getTransportOptions = (travelMode) => {
@@ -54,7 +55,7 @@ const getTransportOptions = (travelMode) => {
 const dep_flight_no = ref('');
 const option_country = ref([]);
 
-const count = inject('globalCount');
+const count = inject('globalCount', ref(0));
 console.log("The value of count: ", count.value);
 
 onMounted(() => {
@@ -81,44 +82,35 @@ const onSubmit = (event) => {
 const continueClicked = () => {
     count.value++;
     console.log("The value of count: ", count.value);
-}
-
-
-
+};
 </script>
 
 <template>
     <header>
-        <Navbar />
-        Arrival Card > Add Arrival Card
+        <Navbar /> Arrival Card > Add Arrival Card
     </header>
     <div class="container-TA">
         <ProgressBar />
         <form @submit.prevent="onSubmit">
             <div class="detail-container-TA">
-                <div class="image">
-                    <img :src="worldIcon">
+                <div class="image"> <img :src="worldIcon">
                     <h1 class="title">Trip Information</h1>
                 </div>
                 <hr class="line">
                 <div class="details">
                     <p class="text">Arrival Information</p><br>
-                    <div class="detail-forms">
-                        <label>Date of Arrival</label>
-                        <div class="dob-container">
-                            <select v-model="selected_year_of_arrival" class="dob-select">
+                    <div class="detail-forms"> <label>Date of Arrival</label>
+                        <div class="dob-container"> <select v-model="selected_year_of_arrival" class="dob-select">
                                 <option disabled value="">yyyy</option>
                                 <option v-for="option in option_year" :key="option.value" :value="option.value">{{
                                     option.name }}
                                 </option>
-                            </select>
-                            <select v-model="selected_month_of_arrival" class="dob-select">
+                            </select> <select v-model="selected_month_of_arrival" class="dob-select">
                                 <option disabled value="">mm</option>
                                 <option v-for="option in option_month" :key="option.value" :value="option.value">{{
                                     option.name }}
                                 </option>
-                            </select>
-                            <select v-model="selected_day_of_arrival" class="dob-select">
+                            </select> <select v-model="selected_day_of_arrival" class="dob-select">
                                 <option disabled value="">dd</option>
                                 <option v-for="option in option_day" :key="option.value" :value="option.value">{{
                                     option.name }}
@@ -126,14 +118,12 @@ const continueClicked = () => {
                             </select>
                         </div>
                     </div>
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Country/Territory where you Boarded</label>
-                        <Select v-model="selected_country" :options="option_country" optionLabel="country"
-                            placeholder="Select a City" />
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Country/Territory where you
+                            Boarded</label>
+                        <Select v-model="selected_country" :options="option_country"
+                            optionLabel="country" placeholder="Select a Country" :filter="true" filterBy="country"  class="countrySelect"/>
                     </div>
-
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Purpose of Travel</label>
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Purpose of Travel</label>
                         <div class="flex-row">
                             <select v-model="purpose_of_travel" class="form-control" required>
                                 <option disabled value="">Select purpose</option>
@@ -153,62 +143,45 @@ const continueClicked = () => {
                                 placeholder="Please specify" :disabled="purpose_of_travel !== 'Others'" />
                         </div>
                     </div>
-
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Mode of Travel</label>
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Mode of Travel</label>
                         <div class="radio-group">
                             <label><input type="radio" value="AIR" v-model="mode_of_travel" required /> AIR</label>
                             <label><input type="radio" value="LAND" v-model="mode_of_travel" /> LAND</label>
                             <label><input type="radio" value="SEA" v-model="mode_of_travel" /> SEA</label>
                         </div>
                     </div>
-
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Mode of Transport</label>
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Mode of Transport</label>
                         <div class="flex-row">
                             <select v-model="mode_of_transport" class="form-control" required>
                                 <option disabled value="">Select</option>
                                 <option v-for="option in getTransportOptions(mode_of_travel)" :key="option"
-                                    :value="option" v-show="option !== 'Select'">
-                                    {{ option }}
+                                    :value="option" v-show="option !== 'Select'"> {{ option }}
                                 </option>
                             </select>
                             <input type="text" v-model="mode_of_transport_other" class="form-control other-input"
                                 placeholder="Please specify" :disabled="mode_of_transport !== 'Others'" />
                         </div>
                     </div>
-
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
                         <input type="text" v-model="flight_no" class="form-control" required />
                     </div>
-
                     <p class="text">Departure Information</p><br>
-
-                    <div class="detail-forms">
-                        <label><span class="asterisk">*</span>Date of Departure</label>
-                        <div class="dob-container">
-                            <select v-model="selected_year_of_departure" class="dob-select">
+                    <div class="detail-forms"> <label><span class="asterisk">*</span>Date of Departure</label>
+                        <div class="dob-container"> <select v-model="selected_year_of_departure" class="dob-select">
                                 <option disabled value="">yyyy</option>
                                 <option v-for="option in option_year" :key="option.value" :value="option.value">{{
-                                    option.name }}
-                                </option>
-                            </select>
-                            <select v-model="selected_month_of_departure" class="dob-select">
+                                    option.name }} </option>
+                            </select> <select v-model="selected_month_of_departure" class="dob-select">
                                 <option disabled value="">mm</option>
                                 <option v-for="option in option_month" :key="option.value" :value="option.value">{{
-                                    option.name }}
-                                </option>
-                            </select>
-                            <select v-model="selected_day_of_departure" class="dob-select">
+                                    option.name }} </option>
+                            </select> <select v-model="selected_day_of_departure" class="dob-select">
                                 <option disabled value="">dd</option>
                                 <option v-for="option in option_day" :key="option.value" :value="option.value">{{
-                                    option.name }}
-                                </option>
+                                    option.name }} </option>
                             </select>
                         </div>
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Mode of Travel</label>
                         <div class="radio-group">
@@ -217,27 +190,22 @@ const continueClicked = () => {
                             <label><input type="radio" value="SEA" v-model="dep_mode_of_travel" /> SEA</label>
                         </div>
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Mode of Transport</label>
                         <div class="flex-row">
                             <select v-model="dep_mode_of_transport" class="form-control">
                                 <option disabled value="">Select</option>
                                 <option v-for="option in getTransportOptions(dep_mode_of_travel)" :key="option"
-                                    :value="option" v-show="option !== 'Select'">
-                                    {{ option }}
-                                </option>
+                                    :value="option" v-show="option !== 'Select'"> {{ option }} </option>
                             </select>
                             <input type="text" v-model="dep_mode_of_transport_other" class="form-control other-input"
                                 placeholder="Please specify" :disabled="dep_mode_of_transport !== 'Others'" />
                         </div>
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
                         <input type="text" v-model="dep_flight_no" class="form-control" />
                     </div>
-
                 </div>
                 <div class="image">
                     <img :src="accomadationIcon">
@@ -255,45 +223,43 @@ const continueClicked = () => {
                                 <option>Motels</option>
                                 <option>Hostels</option>
                                 <option>Others</option>
-                            </select>
-                            <input type="text" v-model="type_other" class="form-control other-input"
+                            </select> <input type="text" v-model="type_other" class="form-control other-input"
                                 placeholder="Please specify" :disabled="type_of_accomadation !== 'Others'" />
                         </div>
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Province</label>
-                        <input type="text" v-model="province" class="form-control" placeholder="Enter Province"></input>
+                        <input type="text" v-model="province" class="form-control" placeholder="Enter Province" />
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>District. Area</label>
-                        <input type="text" v-model="district" class="form-control" placeholder="Enter District"></input>
+                        <input type="text" v-model="district" class="form-control" placeholder="Enter District" />
                     </div>
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Sub-District/Sub-Area</label>
                         <input type="text" v-model="sub_district" class="form-control"
-                            placeholder="Enter Sub-District"></input>
+                            placeholder="Enter Sub-District" />
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Post Code</label>
-                        <input type="number" v-model="post_code" class="form-control" pattern="[0-9]{5}"></input>
+                        <input type="number" v-model="post_code" class="form-control" pattern="[0-9]{5}" />
                     </div>
-
                     <div class="detail-forms">
                         <label><span class="asterisk">*</span>Address</label>
                         <textarea v-model="address" placeholder="Add Address Here" class="form-control"></textarea>
                     </div>
-
                 </div>
+            </div>
+            <div class="button-container">
+                <button type="button" class="btn-prev">Previous</button>
                 <button type="submit" class="btn-continue">Continue</button>
-                <button type="previous" class="btn-prev" style="margin-left: 10px;">Previous</button>
             </div>
         </form>
     </div>
 </template>
 
-<style>
+
+<style scoped>
 * {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -301,7 +267,6 @@ const continueClicked = () => {
 
 .container-TA {
     height: calc(150vh - 20px);
-    ;
     width: calc(100vw - 20px);
     margin: 10px;
     box-shadow: 0 0 10px #51575a;
@@ -388,6 +353,7 @@ const continueClicked = () => {
     color: rgb(27, 108, 163);
     font-weight: 500;
     min-width: 160px;
+    white-space: wrap;
 }
 
 .form-control {
@@ -406,6 +372,13 @@ const continueClicked = () => {
     color: #9ca3af;
     cursor: not-allowed;
 }
+
+.countrySelect {
+    width: 100%;
+    box-sizing: border-box;
+    height: 30px;
+}
+
 
 .flex-row {
     display: flex;
@@ -439,28 +412,35 @@ const continueClicked = () => {
     color: red;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: row;
+    gap: 75vw;
+    align-items: center;
+    padding: 20px;
+}
+
 .btn-continue {
-    padding: 5px 10px;
-    border-radius: 20px;
-    color: #ffffff;
-    background-color: rgb(27, 108, 163);
     border: none;
-    margin-top: -1mm;
-    font-size: 12px;
-    margin-left: auto;
-    display: block;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 
 .btn-prev {
-    display: block;
-    padding: 10px;
-    height: fit-content;
-    border-radius: 20px;
-    font-size: 12px;
     border: none;
-    margin-right: auto;
-    margin-top: -2%;
-    color: #ffffff;
-    background-color: rgb(27, 108, 163);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin: 0;
 }
 </style>
