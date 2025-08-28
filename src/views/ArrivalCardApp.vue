@@ -229,15 +229,14 @@ const onSubmit = (event) => {
   font-family: 'Arial', sans-serif;
 }
 
-.container-tp {
-  height: calc(110vh - 20px);
+.container-TA {
+  height: calc(150vh - 20px);
   width: calc(100vw - 20px);
   margin: 10px;
   box-shadow: 0 0 10px #51575a;
-  justify-items: center;
 }
 
-.detail-container {
+.detail-container-TA {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -251,6 +250,31 @@ const onSubmit = (event) => {
 
 .title {
   font-size: 15px;
+  color: rgb(27, 108, 163);
+  font-weight: 300;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.dob-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.dob-select {
+  flex: 1;
+  border-radius: 2rem;
+  text-align: center;
+  height: 5vh;
+  font-size: 13px;
+  color: #000000;
+  background: transparent;
+  outline: none;
+}
+
+.text {
+  font-size: 13px;
   color: rgb(27, 108, 163);
   font-weight: 300;
   margin-top: 5px;
@@ -288,14 +312,12 @@ const onSubmit = (event) => {
   gap: 12px;
 }
 
-
 .detail-forms label {
   font-size: 12px;
   color: rgb(27, 108, 163);
   font-weight: 500;
-  position: relative;
+  min-width: 160px;
   white-space: wrap;
-  min-width: 120px;
 }
 
 .form-control {
@@ -307,6 +329,12 @@ const onSubmit = (event) => {
   background-color: #ffffff;
   width: 100%;
   box-sizing: border-box;
+}
+
+.form-control:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
 }
 
 .form-phone {
@@ -322,7 +350,7 @@ const onSubmit = (event) => {
 
 .radio-form {
   padding: 8px 20px;
-  width: 100%;
+  width: 160px;
   font-size: 12px;
   display: inline-flex;
 }
