@@ -2,11 +2,11 @@
 import { inject, ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import ProgressBar from '@/components/ProgressBar.vue';
-import worldIcon from '@/assets/images/worldIcon.png';
-import accomadationIcon from '@/assets/images/accomadationIcon.png';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
 import SearchDropdown from '@/components/SearchDropdown.vue';
+import tripIcon from '/worldIcon.svg';
+import buildingIcon from '/buildingIcon.svg';
 
 const option_month = ref([]);
 const option_day = ref([]);
@@ -94,7 +94,7 @@ const previousClicked = () => {
         <ProgressBar />
         <form @submit.prevent="onSubmit">
             <div class="detail-container-TA">
-                <div class="image"> <img :src="worldIcon">
+                <div class="image"> <img :src="tripIcon">
                     <h1 class="title">Trip Information</h1>
                 </div>
                 <hr class="line">
@@ -124,7 +124,8 @@ const previousClicked = () => {
                         <Select v-model="selected_country" :options="option_country" optionLabel="country"
                             placeholder="Select a Country" :filter="true" filterBy="country" class="countrySelect" />
                     </div>
-                    <div class="detail-forms"> <label><span class="asterisk">*</span>Purpose of Travel</label>
+                    <div class="detail-forms">
+                        <label><span class="asterisk">*</span>Purpose of Travel</label>
                         <div class="flex-row">
                             <select v-model="purpose_of_travel" class="form-control" required>
                                 <option disabled value="">Select purpose</option>
@@ -144,14 +145,16 @@ const previousClicked = () => {
                                 placeholder="Please specify" :disabled="purpose_of_travel !== 'Others'" />
                         </div>
                     </div>
-                    <div class="detail-forms"> <label><span class="asterisk">*</span>Mode of Travel</label>
+                    <div class="detail-forms">
+                        <label><span class="asterisk">*</span>Mode of Travel</label>
                         <div class="radio-group">
                             <label><input type="radio" value="AIR" v-model="mode_of_travel" required /> AIR</label>
                             <label><input type="radio" value="LAND" v-model="mode_of_travel" /> LAND</label>
                             <label><input type="radio" value="SEA" v-model="mode_of_travel" /> SEA</label>
                         </div>
                     </div>
-                    <div class="detail-forms"> <label><span class="asterisk">*</span>Mode of Transport</label>
+                    <div class="detail-forms">
+                        <label><span class="asterisk">*</span>Mode of Transport</label>
                         <div class="flex-row">
                             <select v-model="mode_of_transport" class="form-control" required>
                                 <option disabled value="">Select</option>
@@ -163,23 +166,28 @@ const previousClicked = () => {
                                 placeholder="Please specify" :disabled="mode_of_transport !== 'Others'" />
                         </div>
                     </div>
-                    <div class="detail-forms"> <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
+                    <div class="detail-forms">
+                        <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
                         <input type="text" v-model="flight_no" class="form-control" required />
                     </div>
                     <p class="text">Departure Information</p><br>
-                    <div class="detail-forms"> <label><span class="asterisk">*</span>Date of Departure</label>
+                    <div class="detail-forms">
+                        <label><span class="asterisk">*</span>Date of Departure</label>
                         <div class="dob-container"> <select v-model="selected_year_of_departure" class="dob-select">
                                 <option disabled value="">yyyy</option>
                                 <option v-for="option in option_year" :key="option.value" :value="option.value">{{
                                     option.name }} </option>
-                            </select> <select v-model="selected_month_of_departure" class="dob-select">
+                            </select>
+                            <select v-model="selected_month_of_departure" class="dob-select">
                                 <option disabled value="">mm</option>
                                 <option v-for="option in option_month" :key="option.value" :value="option.value">{{
                                     option.name }} </option>
-                            </select> <select v-model="selected_day_of_departure" class="dob-select">
+                            </select>
+                            <select v-model="selected_day_of_departure" class="dob-select">
                                 <option disabled value="">dd</option>
                                 <option v-for="option in option_day" :key="option.value" :value="option.value">{{
-                                    option.name }} </option>
+                                    option.name }}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -209,7 +217,7 @@ const previousClicked = () => {
                     </div>
                 </div>
                 <div class="image">
-                    <img :src="accomadationIcon">
+                    <img :src="buildingIcon">
                     <h1 class="title">Accommodation Information</h1>
                 </div>
                 <hr class="line">
@@ -321,10 +329,6 @@ const previousClicked = () => {
 .image {
     display: flex;
     align-items: center;
-}
-
-.image img {
-    width: 40px;
 }
 
 .line {
@@ -464,16 +468,16 @@ const previousClicked = () => {
     gap: 75vw;
 }
 
-.btn-continue-ta, 
+.btn-continue-ta,
 .btn-previous-ta {
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #ffffff;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  font-size: 12px;
-  height: 40px;
-  width: 150px;
-  margin-top: 20px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: rgb(27, 108, 163);
+    border: none;
+    font-size: 12px;
+    height: 40px;
+    width: 150px;
+    margin-top: 20px;
 }
 </style>

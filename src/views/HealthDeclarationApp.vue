@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from '@/components/ProgressBar.vue';
+import healthIcon from '/healthIcon.svg'
 import data_country from '@/assets/dataCountry.json';
-import healthIcon from '@/assets/images/healthicon.png';
 import { inject, ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -19,6 +19,8 @@ const option_country = ref([]);
 // - .p-multiselect-panel css
 // - .p-multiselect-token css 
 // - .p-multiselect-filter-container input css
+
+
 
 onMounted(() => {
     option_country.value = data_country.map(c => ({
@@ -113,10 +115,6 @@ const onSubmit = (event) => {
 .image {
     display: flex;
     align-items: center;
-}
-
-.image img {
-    width: 40px;
 }
 
 .text-hd {

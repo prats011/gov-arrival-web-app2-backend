@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from '@/components/ProgressBar.vue';
-import infoIcon from '@/assets/images/infoIcon.png';
-import personalIcon from '@/assets/images/personalIcon.png';
+import infoIcon from '/personalIcon.svg';
+import PassportIcon from '/worldIcon.svg';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
 import { ref, onMounted, inject, watch } from 'vue';
@@ -102,7 +102,7 @@ const onSubmit = (event) => {
       <div class="detail-container-pi">
 
         <div class="image">
-          <img :src="infoIcon">
+          <img :src="PassportIcon">
           <h1 class="title">Personal Information In Passport</h1>
         </div>
         <hr class="line">
@@ -135,7 +135,7 @@ const onSubmit = (event) => {
         </div>
 
         <div class="image">
-          <img :src="personalIcon">
+          <img :src="infoIcon">
           <h1 class="title">Personal Information</h1>
         </div>
         <hr class="line">
@@ -276,10 +276,11 @@ const onSubmit = (event) => {
 .image {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 .image img {
-  width: 40px;
+  max-width: 20px;
 }
 
 .line {
@@ -412,5 +413,4 @@ const onSubmit = (event) => {
 .asterick {
   color: red;
 }
-
 </style>
