@@ -81,6 +81,18 @@ const onSubmit = (event) => {
     form.reportValidity();
     return;
   }
+   if (!selected_nationality.value) {
+    alert("Please select a nationality");
+    return;
+  }
+  if (!selected_country.value) {
+    alert("Please select a country");
+    return;
+  }
+  if (!selected_city.value) {
+    alert("Please select a city");
+    return;
+  }
   router.push("/arrival-card/trip-&-accomodation-information");
 };
 
@@ -144,17 +156,17 @@ const onSubmit = (event) => {
           <div class="detail-forms">
             <label><span class="asterick">*</span>Date of Birth</label>
             <div class="dob-container">
-              <select v-model="selected_year" class="dob-select">
+              <select required v-model="selected_year" class="dob-select">
                 <option disabled value="">yyyy</option>
                 <option v-for="option in option_year" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
               </select>
-              <select v-model="selected_month" class="dob-select">
+              <select required v-model="selected_month" class="dob-select">
                 <option disabled value="">mm</option>
                 <option v-for="option in option_month" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
               </select>
-              <select v-model="selected_day" class="dob-select">
+              <select required v-model="selected_day" class="dob-select">
                 <option disabled value="">dd</option>
                 <option v-for="option in option_day" :key="option.value" :value="option.value">{{ option.name }}
                 </option>
@@ -170,11 +182,11 @@ const onSubmit = (event) => {
           <div class="detail-forms">
             <label><span class="asterick">*</span>Gender</label>
             <div class="radio-form">
-              <input type="radio" id="male" name="gender" value="MALE" v-model="gender">
+              <input  type="radio" id="male" name="gender" value="MALE" required v-model="gender">
               <label for="male">MALE</label>
-              <input type="radio" id="female" name="gender" value="FEMALE" v-model="gender">
+              <input type="radio" id="female" name="gender" value="FEMALE" required v-model="gender">
               <label for="female">FEMALE</label>
-              <input type="radio" id="undefined" name="gender" value="UNDEFINED" v-model="gender">
+              <input type="radio" id="undefined" name="gender" value="UNDEFINED" required v-model="gender">
               <label for="undefined">UNDEFINED</label>
             </div>
           </div>

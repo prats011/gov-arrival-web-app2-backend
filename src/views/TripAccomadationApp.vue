@@ -76,13 +76,16 @@ const onSubmit = (event) => {
         form.reportValidity();
         return;
     }
+    if (!selected_country.value) {
+        alert("Please select a country");
+        return;
+    }
     router.push("/arrival-card/health-declaration");
 };
 
 const previousClicked = () => {
     router.push("/arrival-card/personal-information")
 }
-
 
 </script>
 
@@ -275,7 +278,7 @@ const previousClicked = () => {
 }
 
 .container-TA {
-    height: calc(150vh - 20px);
+    height: calc(140vh - 20px);
     width: calc(100vw - 20px);
     margin: 10px;
     box-shadow: 0 0 10px #51575a;
