@@ -67,6 +67,7 @@ onMounted(() => {
         symbol: c.symbol,
         cities: c.cities
     }));
+    count.value = 1;
 });
 
 const onSubmit = (event) => {
@@ -75,14 +76,14 @@ const onSubmit = (event) => {
         form.reportValidity();
         return;
     }
-    continueClicked();
     router.push("/arrival-card/health-declaration");
 };
 
-const continueClicked = () => {
-    count.value++;
-    console.log("The value of count: ", count.value);
-};
+const previousClicked = () => {
+    router.push("/arrival-card/personal-information")
+}
+
+
 </script>
 
 <template>
@@ -120,8 +121,8 @@ const continueClicked = () => {
                     </div>
                     <div class="detail-forms"> <label><span class="asterisk">*</span>Country/Territory where you
                             Boarded</label>
-                        <Select v-model="selected_country" :options="option_country"
-                            optionLabel="country" placeholder="Select a Country" :filter="true" filterBy="country"  class="countrySelect"/>
+                        <Select v-model="selected_country" :options="option_country" optionLabel="country"
+                            placeholder="Select a Country" :filter="true" filterBy="country" class="countrySelect" />
                     </div>
                     <div class="detail-forms"> <label><span class="asterisk">*</span>Purpose of Travel</label>
                         <div class="flex-row">
@@ -251,7 +252,7 @@ const continueClicked = () => {
                 </div>
             </div>
             <div class="button-container">
-                <button type="button" class="btn-prev">Previous</button>
+                <button type="button" class="btn-prev" @click="previousClicked()" >Previous</button>
                 <button type="submit" class="btn-continue">Continue</button>
             </div>
         </form>
@@ -393,29 +394,29 @@ const continueClicked = () => {
 }
 
 .countrySelect :deep(.p-select-overlay) {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 100%;
-  z-index: 1000;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  margin-top: 2px;
-  max-height: 200px;
-  overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    z-index: 1000;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    margin-top: 2px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .countrySelect :deep(.p-select-dropdown .p-select-dropdown-icon) {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #6b7280;
-  width: 1rem;
-  height: 1rem;
-  transition: transform 0.2s;
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s;
 }
 
 
@@ -432,10 +433,14 @@ const continueClicked = () => {
 
 .radio-group {
     display: flex;
-    gap: 40px;
+    gap: 30px;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+
 }
 
 .radio-group label {

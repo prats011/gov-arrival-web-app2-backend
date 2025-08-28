@@ -25,7 +25,12 @@ onMounted(() => {
         name: c.country,
         code: c.symbol
     }));
+    count.value = 2;
 });
+
+const previousClicked = () => {
+    router.push("/arrival-card/trip-&-accomodation-information")
+}
 
 const onSubmit = (event) => {
     event.preventDefault()
@@ -53,7 +58,7 @@ const onSubmit = (event) => {
                 Public Health of Thailand.
             </p>
             <br />
-            <p class="text">
+            <p class="text-hd">
                 Please list the name of the countries/territories where you stayed within two weeks before arrival.
             </p>
             <form @submit.prevent="onSubmit">
@@ -62,7 +67,7 @@ const onSubmit = (event) => {
                         optionValue="code" filter placeholder="Select Countries" :maxSelectedLabels="3"
                         class="w-full md:w-80" />
                 </div>
-                <button type="button" class="btn-prev" style="margin: 10px;">Previous</button>
+                <button type="button" class="btn-prev" @click="previousClicked()">Previous</button>
                 <button type="submit" class="btn-continue">Continue</button>
             </form>
         </div>
@@ -114,9 +119,9 @@ const onSubmit = (event) => {
 
 .text-hd {
     color: #51575a;
-    font-size: 12px;
+    font-size: 15px;
+    margin-bottom: 20px;
 }
-
 
 .card .p-multiselect {
     display: flex;
@@ -171,5 +176,8 @@ const onSubmit = (event) => {
 
 .btn-continue {
     margin-top: 50px;
+    margin-left: 1160px;
+    
 }
+
 </style>

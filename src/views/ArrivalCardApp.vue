@@ -4,7 +4,6 @@ import infoIcon from '@/assets/images/infoIcon.png';
 import personalIcon from '@/assets/images/personalIcon.png';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
-import SearchDropdown from '@/components/SearchDropdown.vue';
 import { ref, onMounted, inject, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -51,16 +50,12 @@ onMounted(() => {
     symbol: c.symbol,
     country: c.country
   }));
+  count.value = 0;
 });
 
 watch(selected_country, () => {
   selected_city.value = '';
 });
-
-const continueClicked = () => {
-  count.value++;
-};
-
 
 const deleteClicked = () => {
   family_name.value = '';
@@ -80,15 +75,12 @@ const deleteClicked = () => {
   selected_city.value = '';
 }
 
-
-
 const onSubmit = (event) => {
   const form = event.target;
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
   }
-  continueClicked();
   router.push("/arrival-card/trip-&-accomodation-information");
 };
 
@@ -310,6 +302,7 @@ const onSubmit = (event) => {
   flex-direction: row;
   align-items: center;
   gap: 12px;
+  height: 100%;
 }
 
 .detail-forms label {
@@ -349,14 +342,18 @@ const onSubmit = (event) => {
 }
 
 .radio-form {
-  padding: 8px 20px;
-  width: 160px;
-  font-size: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 10px 500px 10px 15px;
   display: inline-flex;
+  width: 160px;
+  align-items: center;
+  box-sizing: border-box;
+  gap: 10px;
 }
 
 .radio-form label {
-  padding: 10px;
+  font-size: 12px;
 }
 
 .btns {
@@ -434,7 +431,7 @@ const onSubmit = (event) => {
 
 .countrySelect :deep(.p-select-overlay),
 .citySelect :deep(.p-select-overlay),
-.nationalitySelect :deep(.p-select-overlay)  {
+.nationalitySelect :deep(.p-select-overlay) {
   position: absolute;
   top: 100%;
   left: 0;
