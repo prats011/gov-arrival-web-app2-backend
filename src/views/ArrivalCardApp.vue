@@ -357,6 +357,27 @@ const onSubmit = (event) => {
   font-size: 12px;
 }
 
+.countrySelect,
+.citySelect,
+.nationalitySelect {
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 40px;
+}
+
+.countrySelect .p-select-label,
+.citySelect .p-select-label,
+.nationalitySelect .p-select-label {
+  font-size: 12px !important;
+}
+
+.countrySelect .p-select-filter-container input,
+.citySelect .p-select-filter-container input,
+.nationalitySelect .p-select-filter-container input {
+  font-size: 8px !important;
+}
+
+
 .button-container-pi {
   display: flex;
   flex-direction: row;
