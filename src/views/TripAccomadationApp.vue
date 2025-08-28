@@ -346,6 +346,7 @@ const continueClicked = () => {
     flex-direction: row;
     align-items: center;
     gap: 12px;
+    height: 100%;
 }
 
 .detail-forms label {
@@ -391,6 +392,33 @@ const continueClicked = () => {
     font-size: 8px !important;
 }
 
+.countrySelect :deep(.p-select-overlay) {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  z-index: 1000;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 2px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.countrySelect :deep(.p-select-dropdown .p-select-dropdown-icon) {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s;
+}
+
+
 .flex-row {
     display: flex;
     flex-direction: column;
@@ -404,9 +432,10 @@ const continueClicked = () => {
 
 .radio-group {
     display: flex;
-    gap: 20px;
+    gap: 40px;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .radio-group label {

@@ -138,7 +138,7 @@ const onSubmit = (event) => {
           <div class="detail-forms">
             <label><span class="asterick">*</span>Nationality/Citizenship</label>
             <Select v-model="selected_nationality" :options="option_nationality" optionLabel="name"
-              placeholder="Select a Nationality" :filter="true" filterBy="name" />
+              placeholder="Select a Nationality" :filter="true" filterBy="name" class="nationalitySelect" />
           </div>
         </div>
 
@@ -195,13 +195,13 @@ const onSubmit = (event) => {
           <div class="detail-forms">
             <label><span class="asterick">*</span>Country/Territory of Residence</label>
             <Select v-model="selected_country" :options="option_country" optionLabel="country"
-              placeholder="Select a Country" :filter="true" filterBy="country" />
+              placeholder="Select a Country" :filter="true" filterBy="country" class="countrySelect" />
           </div>
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>City/State of Residence</label>
             <Select v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
-              :filter="true" :disabled="!selected_country" />
+              :filter="true" :disabled="!selected_country" class="citySelect" />
           </div>
 
           <div class="detail-forms">
@@ -229,14 +229,14 @@ const onSubmit = (event) => {
   font-family: 'Arial', sans-serif;
 }
 
-.container-TA {
-  height: calc(150vh - 20px);
+.container-tp {
+  height: calc(110vh - 20px);
   width: calc(100vw - 20px);
   margin: 10px;
   box-shadow: 0 0 10px #51575a;
 }
 
-.detail-container-TA {
+.detail-container {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -414,5 +414,44 @@ const onSubmit = (event) => {
 
 .asterick {
   color: red;
+}
+
+
+.countrySelect,
+.citySelect,
+.nationalitySelect {
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 40px;
+}
+
+.countrySelect :deep(.p-select-label),
+.citySelect :deep(.p-select-label),
+.nationalitySelect :deep(.p-select-label) {
+  padding: 10px 20px;
+  font-size: 12px !important;
+}
+
+.countrySelect :deep(.p-select-overlay),
+.citySelect :deep(.p-select-overlay),
+.nationalitySelect :deep(.p-select-overlay)  {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 100%;
+  z-index: 1000;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  margin-top: 2px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.countrySelect :deep(.p-select-dropdown .p-select-dropdown-icon),
+.citySelect :deep(.p-select-dropdown .p-select-dropdown-icon),
+.nationalitySelect :deep(.p-select-dropdown .p-select-dropdown-icon) {
+  display: none;
 }
 </style>
