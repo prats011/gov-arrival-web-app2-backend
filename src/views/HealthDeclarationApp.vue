@@ -67,8 +67,10 @@ const onSubmit = (event) => {
                         optionValue="code" filter placeholder="Select Countries" :maxSelectedLabels="3"
                         class="w-full md:w-80" />
                 </div>
-                <button type="button" class="btn-prev" @click="previousClicked()">Previous</button>
-                <button type="submit" class="btn-continue">Continue</button>
+                <div class="button-container-hd">
+                    <button type="button" class="btn-previous-hd" @click="previousClicked()">Previous</button>
+                    <button type="submit" class="btn-continue-hd">Continue</button>
+                </div>
             </form>
         </div>
     </div>
@@ -174,10 +176,22 @@ const onSubmit = (event) => {
     font-size: 14px;
 }
 
-.btn-continue {
-    margin-top: 50px;
-    margin-left: 1160px;
-    
+.button-container-hd {
+    display: flex;
+    justify-content: flex-start;
+    gap: 75vw;
 }
 
+.btn-continue-hd,
+.btn-previous-hd {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: rgb(27, 108, 163);
+    border: none;
+    font-size: 12px;
+    height: 40px;
+    width: 150px;
+    margin-top: 20px;
+}
 </style>

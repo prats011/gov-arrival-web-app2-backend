@@ -251,16 +251,16 @@ const previousClicked = () => {
                     </div>
                 </div>
             </div>
-            <div class="button-container">
-                <button type="button" class="btn-prev" @click="previousClicked()" >Previous</button>
-                <button type="submit" class="btn-continue">Continue</button>
+            <div class="button-container-ta">
+                <button type="button" class="btn-previous-ta" @click="previousClicked()">Previous</button>
+                <button type="submit" class="btn-continue-ta">Continue</button>
             </div>
         </form>
     </div>
 </template>
 
 
-<style scoped>
+<style>
 * {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -457,35 +457,23 @@ const previousClicked = () => {
     color: red;
 }
 
-.button-container {
+.button-container-ta {
     display: flex;
-    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 20px;
     gap: 75vw;
-    align-items: center;
-    padding: 20px;
 }
 
-.btn-continue {
-    border: none;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    width: 140px;
-    height: 40px;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-}
-
-.btn-prev {
-    border: none;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    width: 140px;
-    height: 40px;
-    cursor: pointer;
-    margin-top: 10px;
-    margin: 0;
+.btn-continue-ta, 
+.btn-previous-ta {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: #ffffff;
+  background-color: rgb(27, 108, 163);
+  border: none;
+  font-size: 12px;
+  height: 40px;
+  width: 150px;
+  margin-top: 20px;
 }
 </style>

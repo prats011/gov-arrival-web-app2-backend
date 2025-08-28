@@ -96,10 +96,10 @@ const onSubmit = (event) => {
     Arrival Card > Add Arrival Card
   </header>
   <form @submit.prevent="onSubmit">
-    <div class="container-tp">
+    <div class="container-pi">
       <ProgressBar />
 
-      <div class="detail-container">
+      <div class="detail-container-pi">
 
         <div class="image">
           <img :src="infoIcon">
@@ -206,29 +206,29 @@ const onSubmit = (event) => {
           </div>
         </div>
       </div>
-      <div class="btns">
-        <button type="button" class="btn-delete" @click="deleteClicked()">Delete this traveler</button>
-        <button type="submit" class="btn-continue">Continue</button>
+      <div class="button-container-pi">
+        <button type="button" class="btn-delete-pi" @click="deleteClicked()">Delete this traveler</button>
+        <button type="submit" class="btn-continue-pi">Continue</button>
       </div>
     </div>
   </form>
 </template>
 
 
-<style scoped>
+<style>
 * {
   margin: 0;
   font-family: 'Arial', sans-serif;
 }
 
-.container-tp {
+.container-pi {
   height: calc(110vh - 20px);
   width: calc(100vw - 20px);
   margin: 10px;
   box-shadow: 0 0 10px #51575a;
 }
 
-.detail-container {
+.detail-container-pi {
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -356,7 +356,7 @@ const onSubmit = (event) => {
   font-size: 12px;
 }
 
-.btns {
+.button-container-pi {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -368,7 +368,7 @@ const onSubmit = (event) => {
   margin-top: 10px;
 }
 
-.btn-continue {
+.btn-continue-pi {
   padding: 5px 10px;
   border-radius: 20px;
   color: #ffffff;
@@ -380,7 +380,7 @@ const onSubmit = (event) => {
   margin: 0;
 }
 
-.btn-delete {
+.btn-delete-pi {
   padding: 10px;
   height: 40px;
   border-radius: 20px;
@@ -413,42 +413,4 @@ const onSubmit = (event) => {
   color: red;
 }
 
-
-.countrySelect,
-.citySelect,
-.nationalitySelect {
-  width: 100%;
-  box-sizing: border-box;
-  max-height: 40px;
-}
-
-.countrySelect :deep(.p-select-label),
-.citySelect :deep(.p-select-label),
-.nationalitySelect :deep(.p-select-label) {
-  padding: 10px 20px;
-  font-size: 12px !important;
-}
-
-.countrySelect :deep(.p-select-overlay),
-.citySelect :deep(.p-select-overlay),
-.nationalitySelect :deep(.p-select-overlay) {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 100%;
-  z-index: 1000;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  margin-top: 2px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.countrySelect :deep(.p-select-dropdown .p-select-dropdown-icon),
-.citySelect :deep(.p-select-dropdown .p-select-dropdown-icon),
-.nationalitySelect :deep(.p-select-dropdown .p-select-dropdown-icon) {
-  display: none;
-}
 </style>
