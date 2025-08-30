@@ -93,7 +93,7 @@ const onSubmit = (event) => {
     alert("Please select a city");
     return;
   }
-  router.push("/arrival-card/trip-&-accomodation-information");
+  router.push("/new/trip-&-accomodation-information");
 };
 
 //Websites used
@@ -104,7 +104,6 @@ const onSubmit = (event) => {
 
 <template>
   <header>
-    <Navbar />
     Arrival Card > Add Arrival Card
   </header>
   <form @submit.prevent="onSubmit">
@@ -141,8 +140,8 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Nationality/Citizenship</label>
-            <Select v-model="selected_nationality" :options="option_nationality" optionLabel="name"
-              placeholder="Select a Nationality" :filter="true" filterBy="name" class="custom-select" />
+            <PSelect v-model="selected_nationality" :options="option_nationality" optionLabel="name"
+              placeholder="Select a Nationality" :filter="true" filterBy="name" />
           </div>
         </div>
 
@@ -198,13 +197,13 @@ const onSubmit = (event) => {
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>Country/Territory of Residence</label>
-            <Select v-model="selected_country" :options="option_country" optionLabel="country"
+            <PSelect v-model="selected_country" :options="option_country" optionLabel="country"
               placeholder="Select a Country" :filter="true" filterBy="country" class="custom-select" />
           </div>
 
           <div class="detail-forms">
             <label><span class="asterick">*</span>City/State of Residence</label>
-            <Select v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
+            <PSelect v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
               :filter="true" :disabled="!selected_country" class="custom-select" />
           </div>
 
@@ -367,142 +366,10 @@ const onSubmit = (event) => {
   font-size: 12px;
 }
 
-/* Fixed PrimeVue Select Styling */
+/* PrimeVue Select - Use default styling with basic width */
 .custom-select {
   width: 100%;
   box-sizing: border-box;
-}
-
-/* Main select container */
-.p-select {
-  display: inline-flex;
-  cursor: pointer;
-  position: relative;
-  user-select: none;
-  background: #ffffff;
-  border: 1px solid #d1d5db;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-  border-radius: 4px;
-  min-height: 40px;
-  width: 100%;
-}
-
-.p-select:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: 0 0 0 1px rgb(27, 108, 163);
-  border-color: rgb(27, 108, 163);
-}
-
-/* Select label (placeholder and selected text) */
-.p-select .p-select-label {
-  background: transparent;
-  border: 0 none;
-  cursor: pointer;
-  display: block;
-  font-size: 12px;
-  padding: 8px 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  text-overflow: ellipsis;
-  color: #374151;
-  outline: 0 none;
-}
-
-.p-select .p-select-label.p-placeholder {
-  color: #9ca3af;
-}
-
-/* Dropdown arrow */
-.p-select .p-select-dropdown {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: transparent;
-  color: #6b7280;
-  width: 40px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-
-/* Options panel */
-.p-select-overlay {
-  background: #ffffff;
-  color: #374151;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  min-width: 100%;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  margin-top: 2px;
-}
-
-/* Options list */
-.p-select-overlay .p-select-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-/* Individual option */
-.p-select-overlay .p-select-option {
-  cursor: pointer;
-  font-weight: normal;
-  white-space: nowrap;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: #374151;
-  user-select: none;
-}
-
-.p-select-overlay .p-select-option:hover {
-  background: rgba(27, 108, 163, 0.1);
-}
-
-.p-select-overlay .p-select-option.p-selected {
-  background: rgba(27, 108, 163, 0.2);
-  color: rgb(27, 108, 163);
-}
-
-/* Filter input */
-.p-select-overlay .p-select-filter-container {
-  position: relative;
-  margin: 8px;
-}
-
-.p-select-overlay .p-select-filter-container .p-select-filter {
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #ffffff;
-  color: #374151;
-}
-
-.p-select-overlay .p-select-filter-container .p-select-filter:focus {
-  outline: 0 none;
-  box-shadow: 0 0 0 1px rgb(27, 108, 163);
-  border-color: rgb(27, 108, 163);
-}
-
-/* Empty message */
-.p-select-overlay .p-select-empty-message {
-  padding: 8px 12px;
-  font-size: 12px;
-  color: #9ca3af;
 }
 
 .button-container-pi {

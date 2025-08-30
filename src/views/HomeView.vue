@@ -8,7 +8,6 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
 <template>
   <div id="App">
     <header>
-      <Navbar />
       <nav class="language">
         <Dropdown title="Language" :items="languages" />
       </nav>
@@ -34,7 +33,7 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
         </div>
 
         <div class="buttons">
-          <router-link to="/arrival-card/personal-information" custom v-slot="{ navigate }">
+          <router-link to="/new/personal-information" custom v-slot="{ navigate }">
             <button @click="navigate" role="link" class="button-menu">
               <span class="button-title">Arrival Card</span>
               <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming
