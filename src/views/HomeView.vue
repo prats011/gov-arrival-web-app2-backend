@@ -2,25 +2,25 @@
 import { ref } from 'vue'
 import Dropdown from '@/components/DropdownApp.vue'
 const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인'])
-
+const version = import.meta.env.VITE_APP_VERSION
 </script>
 
 <template>
   <div id="App">
-    <header>
+    <header class="home-header">
       <nav class="language">
         <Dropdown title="Language" :items="languages" />
       </nav>
     </header>
-    <main>
-      <div class="container">
-        <div class="content">
-          <h1 class="top">
-            IMPORTANT NOTICE
-          </h1>
-          <h2 class="top">
-            In accordance to Immigration Act, B.E. 2522
-          </h2>
+
+    <main class="app-container">
+      <div class="page-container">
+        <div class="home-content">
+          <div class="notice-header">
+            <h1 class="notice-title">IMPORTANT NOTICE</h1>
+            <h2 class="notice-subtitle">In accordance to Immigration Act, B.E. 2522</h2>
+          </div>
+
           <ol class="specifications">
             <li>All passengers must complete the Thailand Digital Arrival Card.</li>
             <li>If the alien stays in the Kingdom longer than 90 days, he/she must notify
@@ -30,124 +30,44 @@ const languages = ref(['English', '日本語', 'Русский', '中国人', '�
             <li>Foreigners are required to submit their arrival card information 3 days
               in advance of their arrival date in Thailand.</li>
           </ol>
+
+          <div class="home-actions">
+            <router-link to="/new/personal-information" custom v-slot="{ navigate }">
+              <button @click="navigate" role="link" class="btn btn-menu">
+                <span class="btn-menu-title">Arrival Card</span>
+                <span class="btn-menu-subtitle">Provide your Thailand Digital Arrival Card details for your coming
+                  trip.</span>
+              </button>
+            </router-link>
+            <router-link to="/update/search" custom v-slot="{ navigate }">
+              <button @click="navigate" role="link" class="btn btn-menu">
+                <span class="btn-menu-title">Update Arrival Card</span>
+                <span class="btn-menu-subtitle">Make change to the Thailand Digital Arrival Card information.</span>
+              </button>
+            </router-link>
+          </div>
+
+          <div class="home-footer">
+            <a href="https://tdac.immigration.go.th/manual/en/index.html" class="footer-link" target="_blank"
+              rel="noopener noreferrer">
+              User's Guide
+            </a>
+            <p class="footer-text">
+              Copyright 2025 Project. All rights reserved.<br>
+              Version {{ version }}
+            </p>
+          </div>
         </div>
-
-        <div class="buttons">
-          <router-link to="/new/personal-information" custom v-slot="{ navigate }">
-            <button @click="navigate" role="link" class="button-menu">
-              <span class="button-title">Arrival Card</span>
-              <span class="button-subtext">Provide your Thailand Digital Arrival Card details for your coming
-                trip.</span>
-            </button>
-          </router-link>
-          <button class="button-menu">
-            <span class="button-title">Update Arrival Card</span>
-            <span class="button-subtext">Make change to the Thailand Digital Arrival Card information.</span>
-          </button>
-        </div>
-
-        <a href="https://tdac.immigration.go.th/manual/en/index.html" class="bottom-text" target="_blank"
-          rel="noopener noreferrer">User's Guide</a>
-        <p class="bottom-text">Copyright 2025 Project. All rights reserved.<br>Version 0.1</p>
-
-
       </div>
     </main>
   </div>
 </template>
 
-
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.container {
-  display: grid;
-  margin-left: 30px;
-  margin-top: 10px;
-  justify-content: center;
-  width: 95vw;
-  height: 70vh;
-  box-shadow: 0 0 5px #1172A7;
-}
-
-.top {
-  display: flex;
-  justify-content: center;
-  color: red;
-  font-size: 18px;
-  font-family: 'Arial', sans-serif;
-  width: 100%;
-  font-weight: 100;
-}
-
-.specifications {
-  color: #0056b3;
-  font-size: 16px;
-  font-family: 'Arial', sans-serif;
-  line-height: 1.2;
-  margin-top: 10px;
-  margin-left: 10vw;
-  margin-right: 10vw;
-}
-
-.content {
-  margin-top: 1rem;
-}
-
+<style scoped>
 .language {
   margin-left: auto;
   display: flex;
   justify-content: flex-end;
   width: 100%;
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 200px;
-  margin-top: 10vh;
-  margin-bottom: 10vh;
-}
-
-.button-menu {
-  background-color: #1172A7;
-  border: none;
-  border-radius: 0.5cm;
-  padding: 25px 40px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: 'Arial', sans-serif;
-  width: 500px;
-  height: 100px;
-  cursor: pointer;
-  box-shadow: 0 1px 2px black;
-  color: #FFF;
-  transition: transform 0.2s;
-}
-
-.button-title {
-  font-size: 25px;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.button-subtext {
-  font-size: 12px;
-  font-weight: normal;
-  line-height: 1.3;
-}
-
-.bottom-text {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-
 }
 </style>

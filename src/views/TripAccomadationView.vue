@@ -85,359 +85,258 @@ const onSubmit = (event) => {
 const previousClicked = () => {
   router.push("/new/personal-information")
 }
-
 </script>
 
 <template>
-  <header>
+  <header class="app-header">
     Arrival Card > Add Arrival Card
   </header>
-  <div class="container-TA">
-    <ProgressBar />
-    <form @submit.prevent="onSubmit">
-      <div class="detail-container-TA">
-        <div class="image"> <img :src="tripIcon">
-          <h1 class="title">Trip Information</h1>
+
+  <div class="app-container">
+    <div class="page-container">
+      <div class="content-wrapper">
+        <div class="progress-container">
+          <ProgressBar />
         </div>
-        <hr class="line">
-        <div class="details">
-          <p class="text">Arrival Information</p><br>
-          <div class="detail-forms"> <label>Date of Arrival</label>
-            <div class="dob-container"> <select v-model="selected_year_of_arrival" class="dob-select">
-                <option disabled value="">yyyy</option>
-                <option v-for="option in option_year" :key="option.value" :value="option.value">{{
-                  option.name }}
-                </option>
-              </select> <select v-model="selected_month_of_arrival" class="dob-select">
-                <option disabled value="">mm</option>
-                <option v-for="option in option_month" :key="option.value" :value="option.value">{{
-                  option.name }}
-                </option>
-              </select> <select v-model="selected_day_of_arrival" class="dob-select">
-                <option disabled value="">dd</option>
-                <option v-for="option in option_day" :key="option.value" :value="option.value">{{
-                  option.name }}
-                </option>
-              </select>
+
+        <form @submit.prevent="onSubmit">
+          <!-- Trip Information Section -->
+          <div class="form-section">
+            <div class="card-header">
+              <img :src="tripIcon" alt="Trip icon">
+              <h2 class="card-title">Trip Information</h2>
+            </div>
+            <hr class="card-divider">
+
+            <!-- Arrival Information -->
+            <div class="form-section-title">Arrival Information</div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label">Date of Arrival</label>
+                <div class="date-inputs">
+                  <select v-model="selected_year_of_arrival" class="form-select">
+                    <option disabled value="">yyyy</option>
+                    <option v-for="option in option_year" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select v-model="selected_month_of_arrival" class="form-select">
+                    <option disabled value="">mm</option>
+                    <option v-for="option in option_month" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select v-model="selected_day_of_arrival" class="form-select">
+                    <option disabled value="">dd</option>
+                    <option v-for="option in option_day" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Country/Territory where you Boarded</label>
+                <PSelect v-model="selected_country" :options="option_country" optionLabel="country"
+                  placeholder="Select a Country" :filter="true" filterBy="country" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Purpose of Travel</label>
+                <div class="form-input-group">
+                  <select v-model="purpose_of_travel" class="form-select" required>
+                    <option disabled value="">Select purpose</option>
+                    <option>Holiday</option>
+                    <option>Meeting</option>
+                    <option>Sports</option>
+                    <option>Business</option>
+                    <option>Incentive</option>
+                    <option>Medical & Wellness</option>
+                    <option>Convention</option>
+                    <option>Employment</option>
+                    <option>Exhibition</option>
+                    <option>Education</option>
+                    <option>Others</option>
+                  </select>
+                  <input type="text" v-model="purpose_other" class="form-input" placeholder="Please specify"
+                    :disabled="purpose_of_travel !== 'Others'" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Mode of Travel</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" value="AIR" v-model="mode_of_travel" required />
+                    <label>AIR</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" value="LAND" v-model="mode_of_travel" />
+                    <label>LAND</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" value="SEA" v-model="mode_of_travel" />
+                    <label>SEA</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Mode of Transport</label>
+                <div class="form-input-group">
+                  <select v-model="mode_of_transport" class="form-select" required>
+                    <option disabled value="">Select</option>
+                    <option v-for="option in getTransportOptions(mode_of_travel)" :key="option" :value="option"
+                      v-show="option !== 'Select'">
+                      {{ option }}
+                    </option>
+                  </select>
+                  <input type="text" v-model="mode_of_transport_other" class="form-input" placeholder="Please specify"
+                    :disabled="mode_of_transport !== 'Others'" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Flight No./Vehicle No.</label>
+                <input type="text" v-model="flight_no" class="form-input" required />
+              </div>
+            </div>
+
+            <!-- Departure Information -->
+            <div class="form-section-title">Departure Information</div>
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label form-label-required">Date of Departure</label>
+                <div class="date-inputs">
+                  <select v-model="selected_year_of_departure" class="form-select">
+                    <option disabled value="">yyyy</option>
+                    <option v-for="option in option_year" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select v-model="selected_month_of_departure" class="form-select">
+                    <option disabled value="">mm</option>
+                    <option v-for="option in option_month" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select v-model="selected_day_of_departure" class="form-select">
+                    <option disabled value="">dd</option>
+                    <option v-for="option in option_day" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Mode of Travel</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" value="AIR" v-model="dep_mode_of_travel" />
+                    <label>AIR</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" value="LAND" v-model="dep_mode_of_travel" />
+                    <label>LAND</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" value="SEA" v-model="dep_mode_of_travel" />
+                    <label>SEA</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Mode of Transport</label>
+                <div class="form-input-group">
+                  <select v-model="dep_mode_of_transport" class="form-select">
+                    <option disabled value="">Select</option>
+                    <option v-for="option in getTransportOptions(dep_mode_of_travel)" :key="option" :value="option"
+                      v-show="option !== 'Select'">
+                      {{ option }}
+                    </option>
+                  </select>
+                  <input type="text" v-model="dep_mode_of_transport_other" class="form-input"
+                    placeholder="Please specify" :disabled="dep_mode_of_transport !== 'Others'" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Flight No./Vehicle No.</label>
+                <input type="text" v-model="dep_flight_no" class="form-input" />
+              </div>
             </div>
           </div>
-          <div class="detail-forms"> <label><span class="asterisk">*</span>Country/Territory where you
-              Boarded</label>
-            <Select v-model="selected_country" :options="option_country" optionLabel="country"
-              placeholder="Select a Country" :filter="true" filterBy="country" class="custom-select" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Purpose of Travel</label>
-            <div class="flex-row">
-              <select v-model="purpose_of_travel" class="form-control" required>
-                <option disabled value="">Select purpose</option>
-                <option>Holiday</option>
-                <option>Meeting</option>
-                <option>Sports</option>
-                <option>Business</option>
-                <option>Incentive</option>
-                <option>Medical & Wellness</option>
-                <option>Convention</option>
-                <option>Employment</option>
-                <option>Exhibition</option>
-                <option>Education</option>
-                <option>Others</option>
-              </select>
-              <input type="text" v-model="purpose_other" class="form-control other-input" placeholder="Please specify"
-                :disabled="purpose_of_travel !== 'Others'" />
+
+          <!-- Accommodation Information Section -->
+          <div class="form-section">
+            <div class="card-header">
+              <img :src="buildingIcon" alt="Building icon">
+              <h2 class="card-title">Accommodation Information</h2>
+            </div>
+            <hr class="card-divider">
+
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label form-label-required">Type of Accommodation in Thailand</label>
+                <div class="form-input-group">
+                  <select v-model="type_of_accommodation" class="form-select" required>
+                    <option disabled value="">Select type</option>
+                    <option>Hotels</option>
+                    <option>Resorts</option>
+                    <option>Motels</option>
+                    <option>Hostels</option>
+                    <option>Others</option>
+                  </select>
+                  <input type="text" v-model="type_other" class="form-input" placeholder="Please specify"
+                    :disabled="type_of_accommodation !== 'Others'" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Province</label>
+                <input type="text" v-model="province" class="form-input" placeholder="Enter Province" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">District. Area</label>
+                <input type="text" v-model="district" class="form-input" placeholder="Enter District" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Sub-District/Sub-Area</label>
+                <input type="text" v-model="sub_district" class="form-input" placeholder="Enter Sub-District" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Post Code</label>
+                <input type="number" v-model="post_code" class="form-input" pattern="[0-9]{5}" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Address</label>
+                <textarea v-model="address" placeholder="Add Address Here" class="form-textarea"></textarea>
+              </div>
             </div>
           </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Mode of Travel</label>
-            <div class="radio-group">
-              <label><input type="radio" value="AIR" v-model="mode_of_travel" required /> AIR</label>
-              <label><input type="radio" value="LAND" v-model="mode_of_travel" /> LAND</label>
-              <label><input type="radio" value="SEA" v-model="mode_of_travel" /> SEA</label>
-            </div>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" @click="previousClicked()">
+              Previous
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Continue
+            </button>
           </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Mode of Transport</label>
-            <div class="flex-row">
-              <select v-model="mode_of_transport" class="form-control" required>
-                <option disabled value="">Select</option>
-                <option v-for="option in getTransportOptions(mode_of_travel)" :key="option" :value="option"
-                  v-show="option !== 'Select'"> {{ option }}
-                </option>
-              </select>
-              <input type="text" v-model="mode_of_transport_other" class="form-control other-input"
-                placeholder="Please specify" :disabled="mode_of_transport !== 'Others'" />
-            </div>
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
-            <input type="text" v-model="flight_no" class="form-control" required />
-          </div>
-          <p class="text">Departure Information</p><br>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Date of Departure</label>
-            <div class="dob-container"> <select v-model="selected_year_of_departure" class="dob-select">
-                <option disabled value="">yyyy</option>
-                <option v-for="option in option_year" :key="option.value" :value="option.value">{{
-                  option.name }} </option>
-              </select>
-              <select v-model="selected_month_of_departure" class="dob-select">
-                <option disabled value="">mm</option>
-                <option v-for="option in option_month" :key="option.value" :value="option.value">{{
-                  option.name }} </option>
-              </select>
-              <select v-model="selected_day_of_departure" class="dob-select">
-                <option disabled value="">dd</option>
-                <option v-for="option in option_day" :key="option.value" :value="option.value">{{
-                  option.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Mode of Travel</label>
-            <div class="radio-group">
-              <label><input type="radio" value="AIR" v-model="dep_mode_of_travel" /> AIR</label>
-              <label><input type="radio" value="LAND" v-model="dep_mode_of_travel" /> LAND</label>
-              <label><input type="radio" value="SEA" v-model="dep_mode_of_travel" /> SEA</label>
-            </div>
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Mode of Transport</label>
-            <div class="flex-row">
-              <select v-model="dep_mode_of_transport" class="form-control">
-                <option disabled value="">Select</option>
-                <option v-for="option in getTransportOptions(dep_mode_of_travel)" :key="option" :value="option"
-                  v-show="option !== 'Select'"> {{ option }} </option>
-              </select>
-              <input type="text" v-model="dep_mode_of_transport_other" class="form-control other-input"
-                placeholder="Please specify" :disabled="dep_mode_of_transport !== 'Others'" />
-            </div>
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Flight No./Vehicle No.</label>
-            <input type="text" v-model="dep_flight_no" class="form-control" />
-          </div>
-        </div>
-        <div class="image">
-          <img :src="buildingIcon">
-          <h1 class="title">Accommodation Information</h1>
-        </div>
-        <hr class="line">
-        <div class="details">
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Type of Accommodation in Thailand</label>
-            <div class="flex-row">
-              <select v-model="type_of_accommodation" class="form-control" required>
-                <option disabled value="">Select type</option>
-                <option>Hotels</option>
-                <option>Resorts</option>
-                <option>Motels</option>
-                <option>Hostels</option>
-                <option>Others</option>
-              </select> <input type="text" v-model="type_other" class="form-control other-input"
-                placeholder="Please specify" :disabled="type_of_accommodation !== 'Others'" />
-            </div>
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Province</label>
-            <input type="text" v-model="province" class="form-control" placeholder="Enter Province" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>District. Area</label>
-            <input type="text" v-model="district" class="form-control" placeholder="Enter District" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Sub-District/Sub-Area</label>
-            <input type="text" v-model="sub_district" class="form-control" placeholder="Enter Sub-District" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Post Code</label>
-            <input type="number" v-model="post_code" class="form-control" pattern="[0-9]{5}" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterisk">*</span>Address</label>
-            <textarea v-model="address" placeholder="Add Address Here" class="form-control"></textarea>
-          </div>
-        </div>
+        </form>
       </div>
-      <div class="button-container-ta">
-        <button type="button" class="btn-previous-ta" @click="previousClicked()">Previous</button>
-        <button type="submit" class="btn-continue-ta">Continue</button>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-}
-
-.container-TA {
-  height: calc(140vh - 20px);
-  width: calc(100vw - 20px);
-  margin: 10px;
-  box-shadow: 0 0 10px #51575a;
-}
-
-.detail-container-TA {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  height: auto;
-  width: 95vw;
-  padding: 10px;
-  box-shadow: 0 0 1px #51575a;
-  border-radius: 1rem;
-  margin-left: 20px;
-}
-
-.title {
-  font-size: 15px;
-  color: rgb(27, 108, 163);
-  font-weight: 300;
-  margin-top: 5px;
-  padding: 0;
-}
-
-.dob-container {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.dob-select {
-  flex: 1;
-  border-radius: 2rem;
-  text-align: center;
-  height: 5vh;
-  font-size: 13px;
-  color: #000000;
-  background: transparent;
-  outline: none;
-}
-
-.text {
-  font-size: 13px;
-  color: rgb(27, 108, 163);
-  font-weight: 300;
-  margin-top: 5px;
-  padding: 0;
-}
-
-.image {
-  display: flex;
-  align-items: center;
-}
-
-.line {
-  margin: 15px 0 10px 0;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  padding: 0.1px;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 40px;
-  padding: 20px;
-  align-items: start;
-}
-
-.detail-forms {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  height: 100%;
-}
-
-.detail-forms label {
-  font-size: 12px;
-  color: rgb(27, 108, 163);
-  font-weight: 500;
-  min-width: 160px;
-  white-space: wrap;
-}
-
-.form-control {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #374151;
-  background-color: #ffffff;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.form-control:disabled {
-  background-color: #f3f4f6;
-  color: #9ca3af;
-  cursor: not-allowed;
-}
-
-/* PrimeVue Select - Use default styling with basic width */
-.custom-select {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.flex-row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-}
-
-.other-input {
-  margin-top: 4px;
-}
-
-.radio-group {
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 10px 15px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-}
-
-.radio-group label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: auto;
-  font-size: 12px;
-  color: rgb(27, 108, 163);
-  font-weight: 500;
-}
-
-.asterisk {
-  color: red;
-}
-
-.button-container-ta {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 20px;
-  gap: 75vw;
-}
-
-.btn-continue-ta,
-.btn-previous-ta {
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #ffffff;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  font-size: 12px;
-  height: 40px;
-  width: 150px;
-  margin-top: 20px;
-}
+<style scoped>
+/* Component-specific styles only if needed */
 </style>

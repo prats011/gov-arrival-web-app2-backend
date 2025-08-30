@@ -1,11 +1,11 @@
 <script setup>
+import { ref, onMounted, inject, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '/personalIcon.svg';
 import PassportIcon from '/worldIcon.svg';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
-import { ref, onMounted, inject, watch } from 'vue';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const count = inject('globalCount');
@@ -95,320 +95,167 @@ const onSubmit = (event) => {
   }
   router.push("/new/trip-&-accomodation-information");
 };
-
-//Websites used
-//https://www.w3schools.com/html/html_forms.asp
-//https://youtu.be/E7PzVgi2RGI?si=4Tb2yOtoL6btWXtG
-//https://youtu.be/XQJegKW0ukU?si=PMuY2D_1G3o-SRCE
 </script>
 
 <template>
-  <header>
+  <header class="app-header">
     Arrival Card > Add Arrival Card
   </header>
-  <form @submit.prevent="onSubmit">
-    <div class="container-pi">
-      <ProgressBar />
 
-      <div class="detail-container-pi">
-
-        <div class="image">
-          <img :src="PassportIcon">
-          <h1 class="title">Personal Information In Passport</h1>
-        </div>
-        <hr class="line">
-
-        <div class="details">
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Family Name</label>
-            <input type="text" class="form-control" required v-model="family_name"
-              placeholder="Only letters A-Z are allowed. Enter '-' if none" />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>First Name</label>
-            <input type="text" class="form-control" required v-model="first_name"
-              placeholder="Only letters A-Z are allowed." />
-          </div>
-          <div class="detail-forms">
-            <label>Middle Name</label>
-            <input type="text" class="form-control" v-model="middle_name" placeholder="Only letters A-Z are allowed." />
-          </div>
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Passport No.</label>
-            <input type="text" class="form-control" required v-model="passport_no" />
-          </div>
-
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Nationality/Citizenship</label>
-            <PSelect v-model="selected_nationality" :options="option_nationality" optionLabel="name"
-              placeholder="Select a Nationality" :filter="true" filterBy="name" />
-          </div>
+  <div class="app-container">
+    <div class="page-container">
+      <div class="content-wrapper">
+        <div class="progress-container">
+          <ProgressBar />
         </div>
 
-        <div class="image">
-          <img :src="infoIcon">
-          <h1 class="title">Personal Information</h1>
-        </div>
-        <hr class="line">
+        <form @submit.prevent="onSubmit">
+          <!-- Passport Information Section -->
+          <div class="form-section">
+            <div class="card-header">
+              <img :src="PassportIcon" alt="Passport icon">
+              <h2 class="card-title">Personal Information In Passport</h2>
+            </div>
+            <hr class="card-divider">
 
-        <div class="details">
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Date of Birth</label>
-            <div class="dob-container">
-              <select required v-model="selected_year" class="dob-select">
-                <option disabled value="">yyyy</option>
-                <option v-for="option in option_year" :key="option.value" :value="option.value">{{ option.name }}
-                </option>
-              </select>
-              <select required v-model="selected_month" class="dob-select">
-                <option disabled value="">mm</option>
-                <option v-for="option in option_month" :key="option.value" :value="option.value">{{ option.name }}
-                </option>
-              </select>
-              <select required v-model="selected_day" class="dob-select">
-                <option disabled value="">dd</option>
-                <option v-for="option in option_day" :key="option.value" :value="option.value">{{ option.name }}
-                </option>
-              </select>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label form-label-required">Family Name</label>
+                <input type="text" class="form-input" required v-model="family_name"
+                  placeholder="Only letters A-Z are allowed. Enter '-' if none" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">First Name</label>
+                <input type="text" class="form-input" required v-model="first_name"
+                  placeholder="Only letters A-Z are allowed." />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Middle Name</label>
+                <input type="text" class="form-input" v-model="middle_name"
+                  placeholder="Only letters A-Z are allowed." />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Passport No.</label>
+                <input type="text" class="form-input" required v-model="passport_no" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Nationality/Citizenship</label>
+                <PSelect v-model="selected_nationality" :options="option_country" optionLabel="country"
+                  placeholder="Select a Country" :filter="true" filterBy="country" />
+              </div>
             </div>
           </div>
 
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Occupation</label>
-            <input type="text" class="form-control" required v-model="occupation" />
-          </div>
+          <!-- Personal Information Section -->
+          <div class="form-section">
+            <div class="card-header">
+              <img :src="infoIcon" alt="Info icon">
+              <h2 class="card-title">Personal Information</h2>
+            </div>
+            <hr class="card-divider">
 
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Gender</label>
-            <div class="radio-form">
-              <input type="radio" id="male" name="gender" value="MALE" required v-model="gender">
-              <label for="male">MALE</label>
-              <input type="radio" id="female" name="gender" value="FEMALE" required v-model="gender">
-              <label for="female">FEMALE</label>
-              <input type="radio" id="undefined" name="gender" value="UNDEFINED" required v-model="gender">
-              <label for="undefined">UNDEFINED</label>
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label form-label-required">Date of Birth</label>
+                <div class="date-inputs">
+                  <select required v-model="selected_year" class="form-select">
+                    <option disabled value="">yyyy</option>
+                    <option v-for="option in option_year" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select required v-model="selected_month" class="form-select">
+                    <option disabled value="">mm</option>
+                    <option v-for="option in option_month" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                  <select required v-model="selected_day" class="form-select">
+                    <option disabled value="">dd</option>
+                    <option v-for="option in option_day" :key="option.value" :value="option.value">
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Occupation</label>
+                <input type="text" class="form-input" required v-model="occupation" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Gender</label>
+                <div class="radio-group">
+                  <div class="radio-item">
+                    <input type="radio" id="male" name="gender" value="MALE" required v-model="gender">
+                    <label for="male">MALE</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="female" name="gender" value="FEMALE" required v-model="gender">
+                    <label for="female">FEMALE</label>
+                  </div>
+                  <div class="radio-item">
+                    <input type="radio" id="undefined" name="gender" value="UNDEFINED" required v-model="gender">
+                    <label for="undefined">UNDEFINED</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Visa No.</label>
+                <input type="text" class="form-input" v-model="visa_no" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Country/Territory of Residence</label>
+                <PSelect v-model="selected_country" :options="option_country" optionLabel="country"
+                  placeholder="Select a Country" :filter="true" filterBy="country" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">City/State of Residence</label>
+                <PSelect v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
+                  :filter="true" :disabled="!selected_country" />
+              </div>
+
+              <div class="form-field">
+                <label class="form-label form-label-required">Phone No.</label>
+                <div class="phone-inputs">
+                  <span class="phone-prefix">+</span>
+                  <input type="tel" class="form-input phone-code" :class="{ 'error': phoneCodeError }" required
+                    v-model="phone_no_code" placeholder="Code" maxlength="4" @input="handlePhoneCodeInput"
+                    @keydown="handleKeyDown">
+                  <input type="tel" class="form-input" :class="{ 'error': phoneNumberError }" v-model="phone_no"
+                    placeholder="Phone No." maxlength="15" required @input="handlePhoneNumberInput"
+                    @keydown="handleKeyDown" />
+                </div>
+                <div class="error-messages">
+                  <span v-if="phoneCodeError" class="error-text">{{ phoneCodeError }}</span>
+                  <span v-if="phoneNumberError" class="error-text">{{ phoneNumberError }}</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="detail-forms">
-            <label>Visa No.</label>
-            <input type="text" class="form-control" v-model="visa_no" />
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary" @click="deleteClicked()">
+              Delete this traveler
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Continue
+            </button>
           </div>
-
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Country/Territory of Residence</label>
-            <PSelect v-model="selected_country" :options="option_country" optionLabel="country"
-              placeholder="Select a Country" :filter="true" filterBy="country" class="custom-select" />
-          </div>
-
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>City/State of Residence</label>
-            <PSelect v-model="selected_city" :options="selected_country?.cities || []" placeholder="Select a City"
-              :filter="true" :disabled="!selected_country" class="custom-select" />
-          </div>
-
-          <div class="detail-forms">
-            <label><span class="asterick">*</span>Phone No.</label>
-            <p style="color: rgb(27, 108, 163); font-size: 15px;">+</p>
-            <input type="num" class="form-phone" required v-model="phone_no_code" placeholder="Code"
-              pattern="[0-9]{2}"></input>
-            <input type="tel" class="form-control" style="width: 90%;" v-model="phone_no" pattern="[0-9]{9}"
-              placeholder="Phone No." />
-          </div>
-        </div>
-      </div>
-      <div class="button-container-pi">
-        <button type="button" class="btn-delete-pi" @click="deleteClicked()">Delete this traveler</button>
-        <button type="submit" class="btn-continue-pi">Continue</button>
+        </form>
       </div>
     </div>
-  </form>
+  </div>
 </template>
 
-<style>
-* {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-}
-
-.container-pi {
-  height: calc(110vh - 20px);
-  width: calc(100vw - 20px);
-  margin: 10px;
-  box-shadow: 0 0 10px #51575a;
-}
-
-.detail-container-pi {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  height: auto;
-  width: 95vw;
-  padding: 10px;
-  box-shadow: 0 0 1px #51575a;
-  border-radius: 1rem;
-  margin-left: 20px;
-}
-
-.title {
-  font-size: 15px;
-  color: rgb(27, 108, 163);
-  font-weight: 300;
-  margin-top: 5px;
-  padding: 0;
-}
-
-.dob-container {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-}
-
-.dob-select {
-  flex: 1;
-  border-radius: 2rem;
-  text-align: center;
-  height: 5vh;
-  font-size: 13px;
-  color: #000000;
-  background: transparent;
-  outline: none;
-}
-
-.text {
-  font-size: 13px;
-  color: rgb(27, 108, 163);
-  font-weight: 300;
-  margin-top: 5px;
-  padding: 0;
-}
-
-.image {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.image img {
-  max-width: 20px;
-}
-
-.line {
-  margin: 15px 0 10px 0;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  padding: 0.1px;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px 40px;
-  padding: 20px;
-  align-items: start;
-}
-
-.detail-forms {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
-  height: 100%;
-}
-
-.detail-forms label {
-  font-size: 12px;
-  color: rgb(27, 108, 163);
-  font-weight: 500;
-  min-width: 160px;
-  white-space: wrap;
-}
-
-.form-control {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #374151;
-  background-color: #ffffff;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.form-control:disabled {
-  background-color: #f3f4f6;
-  color: #9ca3af;
-  cursor: not-allowed;
-}
-
-.form-phone {
-  padding: 8px 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 12px;
-  color: #374151;
-  background-color: #ffffff;
-  max-width: 10%;
-}
-
-.radio-form {
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  padding: 10px 500px 10px 15px;
-  display: inline-flex;
-  width: 160px;
-  align-items: center;
-  box-sizing: border-box;
-  gap: 10px;
-}
-
-.radio-form label {
-  font-size: 12px;
-}
-
-/* PrimeVue Select - Use default styling with basic width */
-.custom-select {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.button-container-pi {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 95vw;
-  gap: 10px;
-  margin-left: 20px;
-  flex-wrap: nowrap;
-  margin-top: 10px;
-}
-
-.btn-continue-pi {
-  padding: 5px 10px;
-  border-radius: 20px;
-  color: #ffffff;
-  background-color: rgb(27, 108, 163);
-  border: none;
-  font-size: 12px;
-  height: 40px;
-  width: 150px;
-  margin: 0;
-}
-
-.btn-delete-pi {
-  padding: 10px;
-  height: 40px;
-  border-radius: 20px;
-  font-size: 12px;
-  border: none;
-  color: #ffffff;
-  background-color: rgb(27, 108, 163);
-  width: 150px;
-  margin: 0;
-}
-
-.asterick {
-  color: red;
-}
+<style scoped>
+/* Component-specific styles only if needed */
 </style>

@@ -3,6 +3,8 @@ import App from "@/App.vue";
 import router from "@/router";
 import { ref } from "vue";
 
+import "@/assets/main.css";
+
 import PrimeVue from "primevue/config";
 import { definePreset } from "@primeuix/themes";
 import Aura from "@primeuix/themes/aura";
@@ -20,17 +22,17 @@ app.component("PSelect", Select);
 const MyPreset = definePreset(Aura, {
   semantic: {
     primary: {
-      50: "{blue.50}",
-      100: "{blue.100}",
-      200: "{blue.200}",
-      300: "{blue.300}",
-      400: "{blue.400}",
-      500: "{blue.500}",
-      600: "{blue.600}",
-      700: "{blue.700}",
-      800: "{blue.800}",
-      900: "{blue.900}",
-      950: "{blue.950}",
+      50: "#e8f4fd",
+      100: "#d1e9fb",
+      200: "#a3d3f7",
+      300: "#75bdf3",
+      400: "#47a7ef",
+      500: "#1B6CA3", // Main brand color
+      600: "#155a8a",
+      700: "#104871",
+      800: "#0a3658",
+      900: "#05243f",
+      950: "#021226",
     },
   },
 });
@@ -41,7 +43,10 @@ app.use(PrimeVue, {
     options: {
       prefix: "p",
       darkModeSelector: "false",
-      cssLayer: false,
+      cssLayer: {
+        name: "primevue",
+        order: "reset, primevue",
+      },
     },
   },
 });
