@@ -69,6 +69,16 @@ const schema = toTypedSchema(
       .min(1, "Passport number is required")
       .max(80, "Passport number must not exceed 80 characters")
       .regex(/^[A-Za-z0-9\s]+$/, "Only letters A-Z and numbers 0-9 are allowed"),
+    selected_nationality: z.string().min(1, "Nationality is required"),
+    selected_country: z.string().min(1, "Country is required"),
+    selected_city: z.string().min(1, "City is required"),
+    selected_year: z.string().min(1, "Year is required"),
+    selected_month: z.string().min(1, "Month is required"),
+    selected_day: z.string().min(1, "Day is required"),
+    occupation: z.string().min(1, "Occupation is required"),
+    gender: z.string().min(1, "Gender is required"),
+    phone_no_code: z.string().min(1, "Country code is required"),
+    phone_no: z.string().min(1, "Phone number is required"),
 
   })
 );
