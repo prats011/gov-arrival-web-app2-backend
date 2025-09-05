@@ -5,6 +5,7 @@ import data_country from '@/assets/dataCountry.json';
 import { inject, ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 
+
 const router = useRouter();
 const count = inject('globalCount');
 
