@@ -35,6 +35,7 @@ const phone_no_code = ref('');
 
 const option_country = ref([]);
 const option_nationality = ref([]);
+const option_country_code = ref([]);
 
 const validationErrors = ref({});
 const showErrors = ref(false);
@@ -64,15 +65,15 @@ const dropdownSchema = z.any().refine(val => val !== '' && val !== null && val !
 
 const phoneCodeSchema = z.string()
   .trim()
-  .min(1, "Country code is required")
-  .max(4, "Maximum 4 digits allowed")
-  .refine(val => /^[0-9]+$/.test(val), "Only numbers are allowed");
+  .min(1, "Please select a country code")
+  .max(5, "Maximum 4 digits allowed")
 
 const phoneNumberSchema = z.string()
   .trim()
+  .min(1, "Please type the phone number")
   .min(4, "Minimum 4 digits required")
   .max(17, "Maximum 17 digits allowed")
-  .refine(val => /^[0-9]+$/.test(val), "Only numbers are allowed");
+  .refine(val => val === '' || /^[0-9]+$/.test(val), "Only numbers are allowed");
 
 const dateSchema = z.object({
   year: z.string().min(1, "Year is required"),
@@ -165,7 +166,12 @@ const validateField = (fieldName, value) => {
         schema = phoneCodeSchema;
         break;
       case 'phone_no':
-        schema = phoneNumberSchema;
+        if (!validationErrors.value['phone_no_code']) {
+          schema = phoneNumberSchema;
+        } else {
+          delete validationErrors.value['phone_no'];
+          return;
+        }
         break;
       case 'date_of_birth':
         schema = dateSchema;
@@ -265,6 +271,12 @@ onMounted(() => {
     { label: 'FEMALE', value: 'FEMALE' },
     { label: 'UNDEFINED', value: 'UNDEFINED' }
   ];
+
+  option_country_code.value = data_country.map(c => ({
+    label: `${c.symbol}: ${c.dial_code}`,
+    value: String(c.dial_code),
+    symbol: c.symbol
+  }));
 
   count.value = 0;
 });
@@ -440,8 +452,8 @@ const hasError = (fieldName) => {
 
               <div class="form-field" :class="{ error: hasError('visa_no') }">
                 <label class="form-label">Visa No.</label>
-                <input type="text" class="form-input" :class="{ error: hasError('visa_no') }" v-model="visa_no" 
-                @input="formatVisaNo" style="text-transform: uppercase;" />
+                <input type="text" class="form-input" :class="{ error: hasError('visa_no') }" v-model="visa_no"
+                  @input="formatVisaNo" style="text-transform: uppercase;" />
                 <span v-if="hasError('visa_no')" class="error-message">
                   {{ getErrorMessage('visa_no') }}
                 </span>
@@ -470,8 +482,8 @@ const hasError = (fieldName) => {
                 <label class="form-label form-label-required">Phone No.</label>
                 <div class="phone-inputs">
                   <span class="phone-prefix">+</span>
-                  <input type="tel" class="form-input phone-code" :class="{ error: hasPhoneError() }"
-                    v-model="phone_no_code" placeholder="Code" maxlength="4">
+                  <PSelect v-model="phone_no_code" :options="option_country_code" optionLabel="label"
+                    optionValue="value" placeholder="Code" :filter="true" style="width: 120px;" :class="{ error: hasPhoneError() }" />
                   <input type="tel" class="form-input" :class="{ error: hasPhoneError() }" v-model="phone_no"
                     placeholder="Phone No." maxlength="17" />
                 </div>
