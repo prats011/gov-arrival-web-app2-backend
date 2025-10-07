@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import PersonalInformation from "@/views/PersonalInformationView.vue";
-import TripAccomadation from "./views/TripAccomadationView.vue";
-import HealthDeclaration from "./views/HealthDeclarationView.vue";
-import Success from "./views/SuccessView.vue";
-import CommingSoon from "./views/CommingSoonView.vue";
+import TripAccomadation from "@/views/TripAccomadationView.vue";
+import HealthDeclaration from "@/views/HealthDeclarationView.vue";
+import Success from "@/views/SuccessView.vue";
+import CommingSoon from "@/views/CommingSoonView.vue";
 
 const routes = [
   { path: "/", component: Home },
