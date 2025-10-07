@@ -53,6 +53,13 @@ const optionalTextInputSchema = z.string()
   .optional()
   .nullable();
 
+const visaNumberSchema = z.string()
+  .trim()
+  .max(80, "Maximum 80 characters allowed")
+  .regex(/^[A-Za-z0-9]*$/, "Only letters and numbers are allowed")
+  .optional()
+  .nullable();
+
 const dropdownSchema = z.any().refine(val => val !== '' && val !== null && val !== undefined, "Please select an option");
 
 const phoneCodeSchema = z.string()
@@ -107,7 +114,7 @@ const personalInfoSchema = z.object({
   selected_nationality: dropdownSchema,
   occupation: textInputSchema,
   gender: z.string().min(1, "Please select a gender"),
-  visa_no: z.string().max(22, "Maximum 22 characters allowed").optional().nullable(),
+  visa_no: visaNumberSchema,
   selected_country: dropdownSchema,
   selected_city: dropdownSchema,
   phone_no_code: phoneCodeSchema,
@@ -135,8 +142,10 @@ const validateField = (fieldName, value) => {
         schema = textInputSchema;
         break;
       case 'middle_name':
-      case 'visa_no':
         schema = optionalTextInputSchema;
+        break;
+      case 'visa_no':
+        schema = visaNumberSchema;
         break;
       case 'passport_no':
         schema = z.string().min(1, "Passport number is required").max(80, "Maximum 80 characters allowed");
@@ -431,7 +440,8 @@ const hasError = (fieldName) => {
 
               <div class="form-field" :class="{ error: hasError('visa_no') }">
                 <label class="form-label">Visa No.</label>
-                <input type="text" class="form-input" :class="{ error: hasError('visa_no') }" v-model="visa_no" />
+                <input type="text" class="form-input" :class="{ error: hasError('visa_no') }" v-model="visa_no" 
+                @input="formatVisaNo" style="text-transform: uppercase;" />
                 <span v-if="hasError('visa_no')" class="error-message">
                   {{ getErrorMessage('visa_no') }}
                 </span>
