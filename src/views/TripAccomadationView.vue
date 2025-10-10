@@ -2,6 +2,7 @@
 import { inject, ref, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { z } from 'zod';
+import axios from 'axios';
 import ProgressBar from '@/components/ProgressBar.vue';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
@@ -55,7 +56,9 @@ const textInputSchema = z.string()
   .refine(val => !/[0-9]/.test(val), "Numbers are not allowed")
   .refine(val => /^[\p{L}\s]+$/u.test(val), "Only letters and spaces are allowed");
 
-const dropdownSchema = z.any().refine(val => val !== '' && val !== null && val !== undefined, "Please select an option");
+const dropdownSchema = z
+  .any()
+  .refine(val => val !== '' && val !== null && val !== undefined, "Please select an option");
 
 const dateSchema = z.object({
   year: z.string().min(1, "Year is required"),
@@ -233,9 +236,6 @@ const validateAllFields = () => {
   }
 };
 
-const getErrorMessage = (fieldName) => validationErrors.value[fieldName] || '';
-const hasError = (fieldName) => showErrors.value && !!validationErrors.value[fieldName];
-
 watch([selected_year_of_arrival, selected_month_of_arrival, selected_day_of_arrival], () => validateField('date_of_arrival', null));
 watch([selected_year_of_departure, selected_month_of_departure, selected_day_of_departure], () => validateField('date_of_departure', null));
 watch(country_boarded, (v) => validateField('country_boarded', v));
@@ -301,7 +301,7 @@ onMounted(() => {
   count.value = 1;
 });
 
-const onSubmit = (event) => {
+const onSubmit = async (event) => {
   event.preventDefault();
   showErrors.value = true;
   if (!validateAllFields()) {
@@ -311,8 +311,49 @@ const onSubmit = (event) => {
     }
     return;
   }
-  router.push('/new/health-declaration');
+
+  const tripDataToSend = {
+    date_of_arrival: formattedArrivalDate.value,
+    country_boarded: country_boarded.value,
+    purpose_of_travel: purpose_of_travel.value === 'Others' ? purpose_of_travel_other.value || '' : purpose_of_travel.value,
+    mode_of_travel_arrival: mode_of_travel_arrival.value,
+    mode_of_transport_arrival: mode_of_transport_arrival.value === 'Others' ? mode_of_transport_arrival_other.value || '' : mode_of_transport_arrival.value,
+    flight_vehicle_no_arrival: flight_vehicle_no_arrival.value,
+    date_of_departure: formattedDepartureDate.value,
+    mode_of_travel_departure: mode_of_travel_departure.value,
+    mode_of_transport_departure: mode_of_transport_departure.value === 'Others' ? mode_of_transport_departure_other.value || '' : mode_of_transport_departure.value,
+    flight_vehicle_no_departure: flight_vehicle_no_departure.value,
+    type_of_accommodation: type_of_accommodation.value === 'Others' ? type_other.value || '' : type_of_accommodation.value,
+    province: province.value,
+    district_area: district_area.value,
+    sub_district: sub_district.value,
+    post_code: post_code.value,
+    address: address.value
+  };
+
+  try {
+    const response = await axios.post("/api/trip-info", tripDataToSend);
+    console.log("Saved to server:", response.data);
+    router.push("/new/health-declaration");
+  } catch (error) {
+    if (error.response?.data?.errors) {
+      validationErrors.value = error.response.data.errors;
+      console.log("Server validation errors:", validationErrors.value);
+    } else {
+      console.error("Server error:", error);
+    }
+  }
 };
+
+
+const getErrorMessage = (fieldName) => {
+  return validationErrors.value[fieldName] || '';
+};
+
+const hasError = (fieldName) => {
+  return showErrors.value && !!validationErrors.value[fieldName];
+};
+
 
 const previousClicked = () => router.push('/new/personal-information');
 
@@ -406,7 +447,8 @@ const getTransportOptions = (travelMode) => {
                   :disabled="purpose_of_travel !== 'Others'" />
                 <span v-if="hasError('purpose_of_travel')" class="error-message">{{ getErrorMessage('purpose_of_travel')
                 }}</span>
-                <span v-if="hasError('purpose_of_travel_other')" class="error-message">{{ getErrorMessage('purpose_of_travel_other')
+                <span v-if="hasError('purpose_of_travel_other')" class="error-message">{{
+                  getErrorMessage('purpose_of_travel_other')
                 }}</span>
               </div>
 
@@ -426,7 +468,8 @@ const getTransportOptions = (travelMode) => {
                     <label>SEA</label>
                   </div>
                 </div>
-                <span v-if="hasError('mode_of_travel_arrival')" class="error-message">{{ getErrorMessage('mode_of_travel_arrival')
+                <span v-if="hasError('mode_of_travel_arrival')" class="error-message">{{
+                  getErrorMessage('mode_of_travel_arrival')
                 }}</span>
               </div>
 
@@ -439,10 +482,11 @@ const getTransportOptions = (travelMode) => {
                     <option v-for="opt in getTransportOptions(mode_of_travel_arrival)" :key="opt" :value="opt"
                       v-show="opt !== 'Select'">{{ opt }}</option>
                   </select>
-                  <input type="text" v-model="mode_of_transport_arrival_other" class="form-input" placeholder="Please specify"
-                    :disabled="mode_of_transport_arrival !== 'Others'" />
+                  <input type="text" v-model="mode_of_transport_arrival_other" class="form-input"
+                    placeholder="Please specify" :disabled="mode_of_transport_arrival !== 'Others'" />
                 </div>
-                <span v-if="hasError('mode_of_transport_arrival')" class="error-message">{{ getErrorMessage('mode_of_transport_arrival')
+                <span v-if="hasError('mode_of_transport_arrival')" class="error-message">{{
+                  getErrorMessage('mode_of_transport_arrival')
                 }}</span>
                 <span v-if="hasError('mode_of_transport_arrival_other')" class="error-message">{{
                   getErrorMessage('mode_of_transport_arrival_other') }}</span>
@@ -451,7 +495,8 @@ const getTransportOptions = (travelMode) => {
               <div class="form-field" :class="{ error: hasError('flight_vehicle_no_arrival') }">
                 <label class="form-label form-label-required">Flight No./Vehicle No.</label>
                 <input type="text" v-model="flight_vehicle_no_arrival" class="form-input" />
-                <span v-if="hasError('flight_vehicle_no_arrival')" class="error-message">{{ getErrorMessage('flight_vehicle_no_arrival') }}</span>
+                <span v-if="hasError('flight_vehicle_no_arrival')" class="error-message">{{
+                  getErrorMessage('flight_vehicle_no_arrival') }}</span>
               </div>
             </div>
 
@@ -525,7 +570,8 @@ const getTransportOptions = (travelMode) => {
               <div class="form-field" :class="{ error: hasError('flight_vehicle_no_departure') }">
                 <label class="form-label form-label-required">Flight No./Vehicle No.</label>
                 <input type="text" v-model="flight_vehicle_no_departure" class="form-input" />
-                <span v-if="hasError('flight_vehicle_no_departure')" class="error-message">{{ getErrorMessage('flight_vehicle_no_departure')
+                <span v-if="hasError('flight_vehicle_no_departure')" class="error-message">{{
+                  getErrorMessage('flight_vehicle_no_departure')
                 }}</span>
               </div>
             </div>
@@ -566,7 +612,8 @@ const getTransportOptions = (travelMode) => {
               <div class="form-field" :class="{ error: hasError('district_area') }">
                 <label class="form-label form-label-required">district_area / Area</label>
                 <input type="text" v-model="district_area" class="form-input" />
-                <span v-if="hasError('district_area')" class="error-message">{{ getErrorMessage('district_area') }}</span>
+                <span v-if="hasError('district_area')" class="error-message">{{ getErrorMessage('district_area')
+                }}</span>
               </div>
 
               <div class="form-field" :class="{ error: hasError('sub_district') }">
@@ -606,11 +653,13 @@ const getTransportOptions = (travelMode) => {
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+
 .form-field.error .form-input,
 .form-field.error .form-select,
 .form-field.error .form-textarea {
   border-color: #ef4444;
 }
+
 .form-input.error,
 .form-select.error {
   border-color: #ef4444;
