@@ -20,22 +20,22 @@ const selected_year_of_departure = ref('');
 const selected_month_of_departure = ref('');
 const selected_day_of_departure = ref('');
 
-const selected_country = ref('');
+const country_boarded = ref('');
 const purpose_of_travel = ref('');
-const purpose_other = ref('');
-const mode_of_travel = ref('');
-const mode_of_transport = ref('');
-const mode_of_transport_other = ref('');
-const flight_no = ref('');
-const dep_mode_of_travel = ref('');
-const dep_mode_of_transport = ref('');
-const dep_mode_of_transport_other = ref('');
-const dep_flight_no = ref('');
+const purpose_of_travel_other = ref('');
+const mode_of_travel_arrival = ref('');
+const mode_of_transport_arrival = ref('');
+const mode_of_transport_arrival_other = ref('');
+const flight_vehicle_no_arrival = ref('');
+const mode_of_travel_departure = ref('');
+const mode_of_transport_departure = ref('');
+const mode_of_transport_departure_other = ref('');
+const flight_vehicle_no_departure = ref('');
 
 const type_of_accommodation = ref('');
 const type_other = ref('');
 const province = ref('');
-const district = ref('');
+const district_area = ref('');
 const sub_district = ref('');
 const post_code = ref('');
 const address = ref('');
@@ -79,22 +79,22 @@ const addressSchema = z.string()
 
 const tripInfoSchema = z.object({
   date_of_arrival: dateSchema,
-  selected_country: dropdownSchema,
+  country_boarded: dropdownSchema,
   purpose_of_travel: dropdownSchema,
-  purpose_other: z.string().max(80).optional().or(z.literal('')),
-  mode_of_travel: dropdownSchema,
-  mode_of_transport: dropdownSchema,
-  mode_of_transport_other: z.string().max(80).optional().or(z.literal('')),
-  flight_no: textInputSchema,
+  purpose_of_travel_other: z.string().max(80).optional().or(z.literal('')),
+  mode_of_travel_arrival: dropdownSchema,
+  mode_of_transport_arrival: dropdownSchema,
+  mode_of_transport_arrival_other: z.string().max(80).optional().or(z.literal('')),
+  flight_vehicle_no_arrival: textInputSchema,
   date_of_departure: dateSchema,
-  dep_mode_of_travel: dropdownSchema,
-  dep_mode_of_transport: dropdownSchema,
-  dep_mode_of_transport_other: z.string().max(80).optional().or(z.literal('')),
-  dep_flight_no: textInputSchema,
+  mode_of_travel_departure: dropdownSchema,
+  mode_of_transport_departure: dropdownSchema,
+  mode_of_transport_departure_other: z.string().max(80).optional().or(z.literal('')),
+  flight_vehicle_no_departure: textInputSchema,
   type_of_accommodation: dropdownSchema,
   type_other: z.string().max(80).optional().or(z.literal('')),
   province: textInputSchema,
-  district: textInputSchema,
+  district_area: textInputSchema,
   sub_district: textInputSchema,
   post_code: z.string()
     .min(4, "Post code must be at least 4 digits")
@@ -143,19 +143,19 @@ const validateField = (fieldName, value) => {
           day: selected_day_of_departure.value
         };
         break;
-      case 'flight_no':
-      case 'dep_flight_no':
+      case 'flight_vehicle_no_arrival':
+      case 'flight_vehicle_no_departure':
       case 'province':
-      case 'district':
+      case 'district_area':
       case 'sub_district':
         schema = textInputSchema;
         break;
-      case 'selected_country':
+      case 'country_boarded':
       case 'purpose_of_travel':
-      case 'mode_of_travel':
-      case 'mode_of_transport':
-      case 'dep_mode_of_travel':
-      case 'dep_mode_of_transport':
+      case 'mode_of_travel_arrival':
+      case 'mode_of_transport_arrival':
+      case 'mode_of_travel_departure':
+      case 'mode_of_transport_departure':
       case 'type_of_accommodation':
         schema = dropdownSchema;
         break;
@@ -191,26 +191,26 @@ const validateAllFields = () => {
       month: selected_month_of_arrival.value,
       day: selected_day_of_arrival.value
     },
-    selected_country: selected_country.value,
+    country_boarded: country_boarded.value,
     purpose_of_travel: purpose_of_travel.value,
-    purpose_other: purpose_other.value,
-    mode_of_travel: mode_of_travel.value,
-    mode_of_transport: mode_of_transport.value,
-    mode_of_transport_other: mode_of_transport_other.value,
-    flight_no: flight_no.value,
+    purpose_of_travel_other: purpose_of_travel_other.value,
+    mode_of_travel_arrival: mode_of_travel_arrival.value,
+    mode_of_transport_arrival: mode_of_transport_arrival.value,
+    mode_of_transport_arrival_other: mode_of_transport_arrival_other.value,
+    flight_vehicle_no_arrival: flight_vehicle_no_arrival.value,
     date_of_departure: {
       year: selected_year_of_departure.value,
       month: selected_month_of_departure.value,
       day: selected_day_of_departure.value
     },
-    dep_mode_of_travel: dep_mode_of_travel.value,
-    dep_mode_of_transport: dep_mode_of_transport.value,
-    dep_mode_of_transport_other: dep_mode_of_transport_other.value,
-    dep_flight_no: dep_flight_no.value,
+    mode_of_travel_departure: mode_of_travel_departure.value,
+    mode_of_transport_departure: mode_of_transport_departure.value,
+    mode_of_transport_departure_other: mode_of_transport_departure_other.value,
+    flight_vehicle_no_departure: flight_vehicle_no_departure.value,
     type_of_accommodation: type_of_accommodation.value,
     type_other: type_other.value,
     province: province.value,
-    district: district.value,
+    district_area: district_area.value,
     sub_district: sub_district.value,
     post_code: String(post_code.value),
     address: address.value
@@ -238,41 +238,41 @@ const hasError = (fieldName) => showErrors.value && !!validationErrors.value[fie
 
 watch([selected_year_of_arrival, selected_month_of_arrival, selected_day_of_arrival], () => validateField('date_of_arrival', null));
 watch([selected_year_of_departure, selected_month_of_departure, selected_day_of_departure], () => validateField('date_of_departure', null));
-watch(selected_country, (v) => validateField('selected_country', v));
+watch(country_boarded, (v) => validateField('country_boarded', v));
 watch(purpose_of_travel, (v) => {
   validateField('purpose_of_travel', v);
   if (v !== 'Others') {
-    purpose_other.value = '';
-    delete validationErrors.value['purpose_other'];
+    purpose_of_travel_other.value = '';
+    delete validationErrors.value['purpose_of_travel_other'];
   }
 });
-watch(purpose_other, (v) => {
-  if (purpose_of_travel.value === 'Others') validateField('purpose_other', v);
+watch(purpose_of_travel_other, (v) => {
+  if (purpose_of_travel.value === 'Others') validateField('purpose_of_travel_other', v);
 });
-watch(mode_of_travel, (v) => validateField('mode_of_travel', v));
-watch(mode_of_transport, (v) => {
-  validateField('mode_of_transport', v);
+watch(mode_of_travel_arrival, (v) => validateField('mode_of_travel_arrival', v));
+watch(mode_of_transport_arrival, (v) => {
+  validateField('mode_of_transport_arrival', v);
   if (v !== 'Others') {
-    mode_of_transport_other.value = '';
-    delete validationErrors.value['mode_of_transport_other'];
+    mode_of_transport_arrival_other.value = '';
+    delete validationErrors.value['mode_of_transport_arrival_other'];
   }
 });
-watch(mode_of_transport_other, (v) => {
-  if (mode_of_transport.value === 'Others') validateField('mode_of_transport_other', v);
+watch(mode_of_transport_arrival_other, (v) => {
+  if (mode_of_transport_arrival.value === 'Others') validateField('mode_of_transport_arrival_other', v);
 });
-watch(flight_no, (v) => validateField('flight_no', v));
-watch(dep_mode_of_travel, (v) => validateField('dep_mode_of_travel', v));
-watch(dep_mode_of_transport, (v) => {
-  validateField('dep_mode_of_transport', v);
+watch(flight_vehicle_no_arrival, (v) => validateField('flight_vehicle_no_arrival', v));
+watch(mode_of_travel_departure, (v) => validateField('mode_of_travel_departure', v));
+watch(mode_of_transport_departure, (v) => {
+  validateField('mode_of_transport_departure', v);
   if (v !== 'Others') {
-    dep_mode_of_transport_other.value = '';
-    delete validationErrors.value['dep_mode_of_transport_other'];
+    mode_of_transport_departure_other.value = '';
+    delete validationErrors.value['mode_of_transport_departure_other'];
   }
 });
-watch(dep_mode_of_transport_other, (v) => {
-  if (dep_mode_of_transport.value === 'Others') validateField('dep_mode_of_transport_other', v);
+watch(mode_of_transport_departure_other, (v) => {
+  if (mode_of_transport_departure.value === 'Others') validateField('mode_of_transport_departure_other', v);
 });
-watch(dep_flight_no, (v) => validateField('dep_flight_no', v));
+watch(flight_vehicle_no_departure, (v) => validateField('flight_vehicle_no_departure', v));
 watch(type_of_accommodation, (v) => {
   validateField('type_of_accommodation', v);
   if (v !== 'Others') {
@@ -284,7 +284,7 @@ watch(type_other, (v) => {
   if (type_of_accommodation.value === 'Others') validateField('type_other', v);
 });
 watch(province, (v) => validateField('province', v));
-watch(district, (v) => validateField('district', v));
+watch(district_area, (v) => validateField('district_area', v));
 watch(sub_district, (v) => validateField('sub_district', v));
 watch(post_code, (v) => validateField('post_code', String(v)));
 watch(address, (v) => validateField('address', v));
@@ -375,13 +375,13 @@ const getTransportOptions = (travelMode) => {
                 }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('selected_country') }">
+              <div class="form-field" :class="{ error: hasError('country_boarded') }">
                 <label class="form-label form-label-required">Country/Territory where you Boarded</label>
-                <select v-model="selected_country" class="form-select" :class="{ error: hasError('selected_country') }">
+                <select v-model="country_boarded" class="form-select" :class="{ error: hasError('country_boarded') }">
                   <option disabled value="">Select a Country</option>
                   <option v-for="c in option_country" :key="c.symbol" :value="c.country">{{ c.country }}</option>
                 </select>
-                <span v-if="hasError('selected_country')" class="error-message">{{ getErrorMessage('selected_country')
+                <span v-if="hasError('country_boarded')" class="error-message">{{ getErrorMessage('country_boarded')
                 }}</span>
               </div>
 
@@ -402,56 +402,56 @@ const getTransportOptions = (travelMode) => {
                   <option>Education</option>
                   <option>Others</option>
                 </select>
-                <input type="text" v-model="purpose_other" class="form-input" placeholder="Please specify"
+                <input type="text" v-model="purpose_of_travel_other" class="form-input" placeholder="Please specify"
                   :disabled="purpose_of_travel !== 'Others'" />
                 <span v-if="hasError('purpose_of_travel')" class="error-message">{{ getErrorMessage('purpose_of_travel')
                 }}</span>
-                <span v-if="hasError('purpose_other')" class="error-message">{{ getErrorMessage('purpose_other')
+                <span v-if="hasError('purpose_of_travel_other')" class="error-message">{{ getErrorMessage('purpose_of_travel_other')
                 }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('mode_of_travel') }">
+              <div class="form-field" :class="{ error: hasError('mode_of_travel_arrival') }">
                 <label class="form-label form-label-required">Mode of Travel</label>
                 <div class="radio-group">
                   <div class="radio-item">
-                    <input type="radio" value="AIR" v-model="mode_of_travel" />
+                    <input type="radio" value="AIR" v-model="mode_of_travel_arrival" />
                     <label>AIR</label>
                   </div>
                   <div class="radio-item">
-                    <input type="radio" value="LAND" v-model="mode_of_travel" />
+                    <input type="radio" value="LAND" v-model="mode_of_travel_arrival" />
                     <label>LAND</label>
                   </div>
                   <div class="radio-item">
-                    <input type="radio" value="SEA" v-model="mode_of_travel" />
+                    <input type="radio" value="SEA" v-model="mode_of_travel_arrival" />
                     <label>SEA</label>
                   </div>
                 </div>
-                <span v-if="hasError('mode_of_travel')" class="error-message">{{ getErrorMessage('mode_of_travel')
+                <span v-if="hasError('mode_of_travel_arrival')" class="error-message">{{ getErrorMessage('mode_of_travel_arrival')
                 }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('mode_of_transport') }">
+              <div class="form-field" :class="{ error: hasError('mode_of_transport_arrival') }">
                 <label class="form-label form-label-required">Mode of Transport</label>
                 <div class="form-input-group">
-                  <select v-model="mode_of_transport" class="form-select"
-                    :class="{ error: hasError('mode_of_transport') }">
+                  <select v-model="mode_of_transport_arrival" class="form-select"
+                    :class="{ error: hasError('mode_of_transport_arrival') }">
                     <option disabled value="">Select</option>
-                    <option v-for="opt in getTransportOptions(mode_of_travel)" :key="opt" :value="opt"
+                    <option v-for="opt in getTransportOptions(mode_of_travel_arrival)" :key="opt" :value="opt"
                       v-show="opt !== 'Select'">{{ opt }}</option>
                   </select>
-                  <input type="text" v-model="mode_of_transport_other" class="form-input" placeholder="Please specify"
-                    :disabled="mode_of_transport !== 'Others'" />
+                  <input type="text" v-model="mode_of_transport_arrival_other" class="form-input" placeholder="Please specify"
+                    :disabled="mode_of_transport_arrival !== 'Others'" />
                 </div>
-                <span v-if="hasError('mode_of_transport')" class="error-message">{{ getErrorMessage('mode_of_transport')
+                <span v-if="hasError('mode_of_transport_arrival')" class="error-message">{{ getErrorMessage('mode_of_transport_arrival')
                 }}</span>
-                <span v-if="hasError('mode_of_transport_other')" class="error-message">{{
-                  getErrorMessage('mode_of_transport_other') }}</span>
+                <span v-if="hasError('mode_of_transport_arrival_other')" class="error-message">{{
+                  getErrorMessage('mode_of_transport_arrival_other') }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('flight_no') }">
+              <div class="form-field" :class="{ error: hasError('flight_vehicle_no_arrival') }">
                 <label class="form-label form-label-required">Flight No./Vehicle No.</label>
-                <input type="text" v-model="flight_no" class="form-input" />
-                <span v-if="hasError('flight_no')" class="error-message">{{ getErrorMessage('flight_no') }}</span>
+                <input type="text" v-model="flight_vehicle_no_arrival" class="form-input" />
+                <span v-if="hasError('flight_vehicle_no_arrival')" class="error-message">{{ getErrorMessage('flight_vehicle_no_arrival') }}</span>
               </div>
             </div>
 
@@ -484,48 +484,48 @@ const getTransportOptions = (travelMode) => {
                 }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('dep_mode_of_travel') }">
+              <div class="form-field" :class="{ error: hasError('mode_of_travel_departure') }">
                 <label class="form-label form-label-required">Mode of Travel</label>
                 <div class="radio-group">
                   <div class="radio-item">
-                    <input type="radio" value="AIR" v-model="dep_mode_of_travel" />
+                    <input type="radio" value="AIR" v-model="mode_of_travel_departure" />
                     <label>AIR</label>
                   </div>
                   <div class="radio-item">
-                    <input type="radio" value="LAND" v-model="dep_mode_of_travel" />
+                    <input type="radio" value="LAND" v-model="mode_of_travel_departure" />
                     <label>LAND</label>
                   </div>
                   <div class="radio-item">
-                    <input type="radio" value="SEA" v-model="dep_mode_of_travel" />
+                    <input type="radio" value="SEA" v-model="mode_of_travel_departure" />
                     <label>SEA</label>
                   </div>
                 </div>
-                <span v-if="hasError('dep_mode_of_travel')" class="error-message">{{
-                  getErrorMessage('dep_mode_of_travel') }}</span>
+                <span v-if="hasError('mode_of_travel_departure')" class="error-message">{{
+                  getErrorMessage('mode_of_travel_departure') }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('dep_mode_of_transport') }">
+              <div class="form-field" :class="{ error: hasError('mode_of_transport_departure') }">
                 <label class="form-label form-label-required">Mode of Transport</label>
                 <div class="form-input-group">
-                  <select v-model="dep_mode_of_transport" class="form-select"
-                    :class="{ error: hasError('dep_mode_of_transport') }">
+                  <select v-model="mode_of_transport_departure" class="form-select"
+                    :class="{ error: hasError('mode_of_transport_departure') }">
                     <option disabled value="">Select</option>
-                    <option v-for="opt in getTransportOptions(dep_mode_of_travel)" :key="opt" :value="opt"
+                    <option v-for="opt in getTransportOptions(mode_of_travel_departure)" :key="opt" :value="opt"
                       v-show="opt !== 'Select'">{{ opt }}</option>
                   </select>
-                  <input type="text" v-model="dep_mode_of_transport_other" class="form-input"
-                    placeholder="Please specify" :disabled="dep_mode_of_transport !== 'Others'" />
+                  <input type="text" v-model="mode_of_transport_departure_other" class="form-input"
+                    placeholder="Please specify" :disabled="mode_of_transport_departure !== 'Others'" />
                 </div>
-                <span v-if="hasError('dep_mode_of_transport')" class="error-message">{{
-                  getErrorMessage('dep_mode_of_transport') }}</span>
-                <span v-if="hasError('dep_mode_of_transport_other')" class="error-message">{{
-                  getErrorMessage('dep_mode_of_transport_other') }}</span>
+                <span v-if="hasError('mode_of_transport_departure')" class="error-message">{{
+                  getErrorMessage('mode_of_transport_departure') }}</span>
+                <span v-if="hasError('mode_of_transport_departure_other')" class="error-message">{{
+                  getErrorMessage('mode_of_transport_departure_other') }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('dep_flight_no') }">
+              <div class="form-field" :class="{ error: hasError('flight_vehicle_no_departure') }">
                 <label class="form-label form-label-required">Flight No./Vehicle No.</label>
-                <input type="text" v-model="dep_flight_no" class="form-input" />
-                <span v-if="hasError('dep_flight_no')" class="error-message">{{ getErrorMessage('dep_flight_no')
+                <input type="text" v-model="flight_vehicle_no_departure" class="form-input" />
+                <span v-if="hasError('flight_vehicle_no_departure')" class="error-message">{{ getErrorMessage('flight_vehicle_no_departure')
                 }}</span>
               </div>
             </div>
@@ -563,14 +563,14 @@ const getTransportOptions = (travelMode) => {
                 <span v-if="hasError('province')" class="error-message">{{ getErrorMessage('province') }}</span>
               </div>
 
-              <div class="form-field" :class="{ error: hasError('district') }">
-                <label class="form-label form-label-required">District / Area</label>
-                <input type="text" v-model="district" class="form-input" />
-                <span v-if="hasError('district')" class="error-message">{{ getErrorMessage('district') }}</span>
+              <div class="form-field" :class="{ error: hasError('district_area') }">
+                <label class="form-label form-label-required">district_area / Area</label>
+                <input type="text" v-model="district_area" class="form-input" />
+                <span v-if="hasError('district_area')" class="error-message">{{ getErrorMessage('district_area') }}</span>
               </div>
 
               <div class="form-field" :class="{ error: hasError('sub_district') }">
-                <label class="form-label form-label-required">Sub-District / Sub-Area</label>
+                <label class="form-label form-label-required">Sub-district_area / Sub-Area</label>
                 <input type="text" v-model="sub_district" class="form-input" />
                 <span v-if="hasError('sub_district')" class="error-message">{{ getErrorMessage('sub_district') }}</span>
               </div>

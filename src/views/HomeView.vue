@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import Dropdown from '@/components/DropdownApp.vue'
+import { createClient } from '@supabase/supabase-js'
 const languages = ref(['English', '日本語', 'Русский', '中国人', '한국인'])
 const version = import.meta.env.VITE_APP_VERSION
 </script>

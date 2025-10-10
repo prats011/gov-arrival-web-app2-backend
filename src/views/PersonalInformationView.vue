@@ -2,11 +2,13 @@
 import { ref, onMounted, inject, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { z } from 'zod';
+import axios from "axios";
 import ProgressBar from '@/components/ProgressBar.vue';
 import infoIcon from '/personalIcon.svg';
 import PassportIcon from '/worldIcon.svg';
 import data_country from '@/assets/dataCountry.json';
 import data_months from '@/assets/dataDate.json';
+
 
 const router = useRouter();
 const count = inject('globalCount');
@@ -306,7 +308,8 @@ const deleteClicked = () => {
   showErrors.value = false;
 }
 
-const onSubmit = (event) => {
+const onSubmit = async (event) => {
+
   event.preventDefault();
   showErrors.value = true;
 
@@ -317,16 +320,45 @@ const onSubmit = (event) => {
     }
     return;
   }
-  router.push("/new/trip-&-accomodation-information");
+  const formData = {
+    family_name: family_name.value,
+    first_name: first_name.value,
+    middle_name: middle_name.value,
+    passport_no: passport_no.value,
+    selected_nationality: selected_nationality.value.name,
+    occupation: occupation.value,
+    gender: gender.value,
+    visa_no: visa_no.value,
+    selected_country: selected_country.value.country,
+    selected_city: selected_city.value,
+    phone_no_code: phone_no_code.value,
+    phone_no: phone_no.value,
+    date_of_birth: formattedDate.value,
+  };
+
+  try {
+    const response = await axios.post("/api/personal-info", formData);
+    console.log("Saved to server:", response.data);
+    router.push("/new/trip-&-accomodation-information");
+  } catch (error) {
+    if (error.response?.data?.errors) {
+      validationErrors.value = error.response.data.errors;
+      console.log("Server validation errors:", validationErrors.value);
+    } else {
+      console.error("Server error:", error);
+    }
+  };
 };
 
-const getErrorMessage = (fieldName) => {
-  return validationErrors.value[fieldName] || '';
-};
+  const getErrorMessage = (fieldName) => {
+    return validationErrors.value[fieldName] || '';
+  };
 
-const hasError = (fieldName) => {
-  return showErrors.value && !!validationErrors.value[fieldName];
-};
+  const hasError = (fieldName) => {
+    return showErrors.value && !!validationErrors.value[fieldName];
+  };
+
+
 </script>
 
 <template>
@@ -483,7 +515,8 @@ const hasError = (fieldName) => {
                 <div class="phone-inputs">
                   <span class="phone-prefix">+</span>
                   <PSelect v-model="phone_no_code" :options="option_country_code" optionLabel="label"
-                    optionValue="value" placeholder="Code" :filter="true" style="width: 120px;" :class="{ error: hasPhoneError() }" />
+                    optionValue="value" placeholder="Code" :filter="true" style="width: 170px;"
+                    :class="{ error: hasPhoneError() }" />
                   <input type="tel" class="form-input" :class="{ error: hasPhoneError() }" v-model="phone_no"
                     placeholder="Phone No." maxlength="17" />
                 </div>
